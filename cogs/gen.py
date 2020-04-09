@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 from discord.ext import commands
 import requests
+import random
 
 
 class gen(commands.Cog):
@@ -16,13 +17,13 @@ class gen(commands.Cog):
         with open('config.json', 'r') as readable:
             self.json_config = json.loads(readable.read())
 
-    async def embed(self, command: str, footer: bool, channel: discord.TextChannel):
+    async def embed(self, command: str, channel: discord.TextChannel):
 
         #Fill .JSON path information
         json_path = self.json_content[command]
         fields = json_path['fields']
-        num = len(fields)
-
+        footer = json_path['footer']
+        
         #Create embed object
         embed = discord.Embed(
             title = json_path['title'],
@@ -30,10 +31,10 @@ class gen(commands.Cog):
         )
 
         #Fill an embed field for every array under the 'fields' object
-        for x in range(0, num):
-            embed.add_field(name = fields[x][0], value = fields[x][1], inline = fields[x][2])
+        for field in fields:
+            embed.add_field(name = field[0], value = field[1], inline = field[2])
 
-        if footer == True:
+        if footer:
             embed.set_footer(text = json_path['footer'])
 
         await channel.send(embed = embed)
@@ -127,6 +128,17 @@ class gen(commands.Cog):
                 return
 
 
+    @commands.command(
+        name = 'triptoy',
+        description = "A collection of trippy websites"
+    )
+    async def triptoy(self, ctx):
+        embed = discord.Embed(
+            title = "Have a trip toy!",
+            colour = 0x7289da,
+            description = random.choice(self.json_content['triptoys']['toys'])
+        )
+        await ctx.send(embed = embed)
 
 def setup(bot):
     bot.add_cog(gen(bot))

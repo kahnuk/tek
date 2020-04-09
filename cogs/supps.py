@@ -10,12 +10,12 @@ class supps(commands.Cog):
         with open('data/supps.json', 'r') as readable:
                 self.json_content = json.loads(readable.read())
 
-    async def embed(self, command: str, footer: bool, channel: discord.TextChannel):
+    async def embed(self, command: str, channel: discord.TextChannel):
 
         #Fill .JSON path information
         json_path = self.json_content[command]
         fields = json_path['fields']
-        num = len(fields)
+        footer = json_path.get('footer')
 
         #Create embed object
         embed = discord.Embed(
@@ -24,10 +24,10 @@ class supps(commands.Cog):
         )
 
         #Fill an embed field for every array under the 'fields' object
-        for x in range(0, num):
-            embed.add_field(name = fields[x][0], value = fields[x][1], inline = fields[x][2])
+        for field in fields:
+            embed.add_field(name = field[0], value = field[1], inline = field[2])
 
-        if footer == True:
+        if footer:
             embed.set_footer(text = json_path['footer'])
 
         await channel.send(embed = embed)
@@ -40,7 +40,7 @@ class supps(commands.Cog):
         description = "A brief overview of supplements for MDMA"
     )
     async def mdmasupps(self, ctx):
-        await self.embed('mdmasupps', False, ctx.message.channel)
+        await self.embed('mdmasupps', ctx.message.channel)
         return
 
 
@@ -51,7 +51,7 @@ class supps(commands.Cog):
         aliases = ['supplements']
     )
     async def supps(self, ctx):
-        await self.embed('supps', False, ctx.message.channel)
+        await self.embed('supps', ctx.message.channel)
         return
 
 
@@ -61,7 +61,7 @@ class supps(commands.Cog):
         description = "A brief overview of alpha-lipoic acid"
     )
     async def ala(self, ctx):
-        await self.embed('ala', False, ctx.message.channel)
+        await self.embed('ala', ctx.message.channel)
         return
 
 
@@ -71,7 +71,7 @@ class supps(commands.Cog):
         description = "A brief overview of acetyl-l-carnitine"
     )
     async def alcar(self, ctx):
-        await self.embed('alcar', False, ctx.message.channel)
+        await self.embed('alcar', ctx.message.channel)
         return
 
     
@@ -81,7 +81,7 @@ class supps(commands.Cog):
         description = "A brief overview of vitamin C"
     )
     async def vitc(self, ctx):
-        await self.embed('vitc', False, ctx.message.channel)
+        await self.embed('vitc', ctx.message.channel)
         return
 
 
@@ -91,7 +91,7 @@ class supps(commands.Cog):
         description = "A brief overview of magnesium"
     )
     async def magnesium(self, ctx):
-        await self.embed('magnesium', False, ctx.message.channel)
+        await self.embed('magnesium', ctx.message.channel)
         return
 
     
@@ -101,7 +101,7 @@ class supps(commands.Cog):
         description = "A brief overview of electrolytic/isotonic solutions"
     )
     async def hydration(self, ctx):
-        await self.embed('hydration', False, ctx.message.channel)
+        await self.embed('hydration', ctx.message.channel)
         return
 
 
@@ -111,7 +111,7 @@ class supps(commands.Cog):
         description = "A brief overview of ginger"
     )
     async def ginger(self, ctx):
-        await self.embed('ginger', False, ctx.message.channel)
+        await self.embed('ginger', ctx.message.channel)
         return
 
 
@@ -121,7 +121,7 @@ class supps(commands.Cog):
         description = "A brief overview of 5-HTP"
     )
     async def fivehtp(self, ctx):
-        await self.embed('5htp', False, ctx.message.channel)
+        await self.embed('5htp', ctx.message.channel)
         return
 
 

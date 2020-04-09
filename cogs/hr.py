@@ -10,12 +10,12 @@ class hr(commands.Cog):
         with open('data/hr.json', 'r') as readable:
                 self.json_content = json.loads(readable.read())
 
-    async def embed(self, command: str, footer: bool, channel: discord.TextChannel):
+    async def embed(self, command: str, channel: discord.TextChannel):
 
         #Fill .JSON path information
         json_path = self.json_content[command]
         fields = json_path['fields']
-        num = len(fields)
+        footer = json_path.get('footer')
 
         #Create embed object
         embed = discord.Embed(
@@ -24,14 +24,14 @@ class hr(commands.Cog):
         )
 
         #Fill an embed field for every array under the 'fields' object
-        for x in range(0, num):
-            embed.add_field(name = fields[x][0], value = fields[x][1], inline = fields[x][2])
+        for field in fields:
+            embed.add_field(name = field[0], value = field[1], inline = field[2])
 
-        if footer == True:
+        if footer:
             embed.set_footer(text = json_path['footer'])
 
         await channel.send(embed = embed)
-        return embed
+        return
 
 
 
@@ -41,8 +41,7 @@ class hr(commands.Cog):
         aliases = ['molly', 'rollsafe', 'mdmahr']
     )
     async def mdma(self, ctx):
-        await self.embed('mdma', True, ctx.channel)
-        ctx.message
+        await self.embed('mdma', ctx.channel)
         return
 
 
@@ -53,7 +52,7 @@ class hr(commands.Cog):
         aliases = ['testkits', 'reagentkits', 'kits']
     )
     async def reagents(self, ctx):
-        await self.embed('reagents', True, ctx.channel)
+        await self.embed('reagents', ctx.channel)
         await ctx.send(file=discord.File('media/color-chart.jpg'))
         return
 
@@ -64,7 +63,7 @@ class hr(commands.Cog):
         description = "Small list of various harm reduction related websites and communities"
     )
     async def resources(self, ctx):
-        await self.embed('resources', False, ctx.channel)
+        await self.embed('resources', ctx.channel)
         return
 
 
@@ -140,7 +139,7 @@ class hr(commands.Cog):
         aliases = ['scale']
     )
     async def scales(self, ctx):
-        await self.embed('scales', False, ctx.channel)
+        await self.embed('scales', ctx.channel)
         return
 
 
@@ -151,7 +150,7 @@ class hr(commands.Cog):
         aliases = ['firsttrip']
     )
     async def prep(self, ctx):
-        await self.embed('prep', True, ctx.channel)
+        await self.embed('prep', ctx.channel)
         return
 
     @commands.command(

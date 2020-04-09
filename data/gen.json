@@ -11,5 +11,9 @@
 "apod": {
     "url": "https://api.nasa.gov/planetary/apod?api_key=Sk8ymYcKXRXvgjfyuW0QQUKW3VDPMJ9e1bqroDYc",
     "title": "NASA Astronomy Picture of the Day"
-}
+},
+"triptoys": {
+    "toys": ["http://iacopoapps.appspot.com/hopalongwebgl/", "http://dinahmoelabs.com/_plink//", "http://neave.com/strobe/", "https://msedgeportal.trafficmanager.net/en-us/microsoft-edge/testdrive/demos/TouchEffects/", "http://lights.helloenjoy.com/", "http://www.chromoscope.net/", "http://iacopoapps.appspot.com/hopalongwebgl/", "http://www.iamnop.com/particles", "http://www.cosmic-symbolism.com/", "http://mandala.akrin.com/#1sZ2W/", "https://askalice.me/mandala/",  "http://29a.ch/sandbox/2011/neonflames/#", "http://mrdoob.com/#/120/harmony", "http://haxiomic.github.io/GPU-Fluid-Experiments/html5/?q=High", "http://dagobah.net/flash/ToneMatrix.swf", "http://madebyevan.com/webgl-water/", "http://www.zefrank.com/dtoy_vs_byokal/", "http://arkadia.xyz/", "http://doodle.notch.net/unmandelboxing/", "https://lhbzr.com/experiments/triangles/", "http://herraizsoto.com/works/2009/labuat/soytuaire/", "http://iridescentpuddle.com/", "http://www.hellorun.helloenjoy.com/", "http://a-way-to-go.com/", "http://asoftmurmur.com/", "http://www.ttaass.com/", "https://plasma-pong.en.softonic.com/", "https://mynoise.net/", "http://rorschmap.com/", "http://erppy.co/"]
+  },
+  "title": "Have a trippy toy!"
 }
