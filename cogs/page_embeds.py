@@ -51,11 +51,13 @@ class page_embeds(commands.Cog):
                 embed.set_author(name = data['title'])
 
                 if 'footer' in data:
-                    embed.set_footer(text = data['footer'])
+                    embed.set_footer(text = str(page_num) + '/' + str(len(data['pages'])) + data['footer'])
                 else:
                     embed.set_footer(text = str(page_num) + '/' + str(len(data['pages'])) + '  Please use drugs responsibly')
                 if 'image' in data:
                     embed.set_image(url = data['image'])
+                if 'thumbnail' in data:
+                    embed.set_thumbnail(url = data['thumbnail'])
 
                 pages.append(embed)
             return pages
@@ -213,6 +215,18 @@ class page_embeds(commands.Cog):
     async def magnesium(self, ctx):
         pages = self.paginator(ctx, 'magnesium')
         await pages.paginate()
+
+
+
+    @commands.command(
+        name = 'help',
+        description = 'Help command'
+    )
+    async def help_cmd(self, ctx):
+        pages = self.paginator(ctx, 'help')
+        await pages.paginate()
+
+
 
 
 def setup(bot):
