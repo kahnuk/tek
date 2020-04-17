@@ -6,7 +6,7 @@ from sqlite3 import Error
 from discord.ext import tasks, commands
 import time
 
-database = '/home/kanuk/dev/tek/db/role_tracker.db'
+database = 'db/role_tracker.db'
 conn = sqlite3.connect(database)
 cursor = conn.cursor()
 
