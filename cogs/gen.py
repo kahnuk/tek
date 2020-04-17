@@ -1,7 +1,9 @@
 import discord
 import json
 from datetime import datetime
+import discord.ext
 from discord.ext import commands
+from discord.ext import menus
 import requests
 import random
 
@@ -60,6 +62,18 @@ class gen(commands.Cog):
 
         await ctx.send(embed = embed)
         return
+
+
+    @commands.command(
+        name = 'help',
+        description = 'Help command paginator'
+    )
+    async def help_cmd(self, ctx):
+        paginator = discord.ext.commands.Paginator(prefix = 'prefix', suffix = 'suffix')
+        paginator.add_line('line one')
+        paginator.add_line('line two')
+        await ctx.channel.send(paginator.pages)
+
 
 
 

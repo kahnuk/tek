@@ -1,0 +1,9 @@
+{
+    "aliases": ["supplements"],
+    "title": "Beneficial Supplements",
+    "fields": [
+        ["Antioxidants", "Extremely effective at preventing oxidative neurotoxicity; ranked by importance from most to least.\n\n``.ala``\n``.alcar``\n``.vitc``", "True"],
+        ["Miscellaneous", "Various supplements show benefit in reducing various adverse effects from MDMA and other stimulants; ranked by importance from most to least.\n\n``.magnesium``\n``.hydration``\n``.ginger``\n``.5htp`` **- Caution**", "True"],
+        ["Disclaimer", "The information provided is only a means to raise awareness and should not be construed as medical advice. Always consult with your doctor before taking supplements.", "False"]
+    ]
+}

@@ -2,9 +2,10 @@ import discord
 import json
 import asyncio
 from discord.ext import commands
+import logging
 
 with open('config.json', 'r') as readable:
-                json_content = json.loads(readable.read())
+    json_content = json.loads(readable.read())
 
 bot = commands.Bot(
     command_prefix = json_content['prefix'],
@@ -13,11 +14,14 @@ bot = commands.Bot(
     case_insensitive = True
 )
 
+logging.basicConfig(level=logging.INFO)
 
 
 @bot.event
 async def on_ready():
     print("discord.py v" + discord.__version__)
+
+    bot.remove_command('help')
 
     for cog in json_content['cogs']:
         bot.load_extension(cog)

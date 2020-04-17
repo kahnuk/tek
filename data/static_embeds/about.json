@@ -1,0 +1,9 @@
+{
+    "title": "Tek v1.0",
+    "fields": [
+        ["A harm reduction Discord bot", "Use command ``.help`` for all available commands", "False"]
+    ],
+    "thumbnail": "https://media.discordapp.net/attachments/506956876215222295/696924742078300250/avatar.png?width=440&height=415",
+    "footer": "kanuk",
+    "footer_thumbnail": "https://images-ext-2.discordapp.net/external/RRFKssf2xa7nOuynpsaDqzM3LZNQ0ny7i_mm2rr0ue8/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/216773835637260289/d46fb353da8a7d06d4e5278f9e18b923.png?width=324&height=324"
+}

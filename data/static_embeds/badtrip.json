@@ -1,0 +1,9 @@
+{
+    "title": "Everything is going to be okay.",
+    "fields": [
+        ["Need help?", "Feel free to ping the HRA team or a member of the community - many are happy to offer assistance over voice or text chat. Alternatively, [TripSit.me](https://chat.tripsit.me/) has an online support room - look for the green button that says \"Sanctuary\"", "True"],
+        ["Need some Good Vibes?", "Check out [this Youtube channel](https://www.youtube.com/user/TheMeditativeMind) dedicated to good vibes. [This video](https://youtu.be/yl74sWWtHTg) is a three hour meditative loop of relaxing, meditative bamboo flute.", "True"],
+        ["Remember:", "**You are going to be okay.** Take long, deep breaths - focus on the motion of breathing.\n**You are loved.** You are supported.", "False"]
+    ],
+    "image": "https://psychonautwiki.org/w/images/8/8f/You_do_not_need_to_understand.gif"
+}

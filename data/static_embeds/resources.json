@@ -1,0 +1,8 @@
+{
+    "title": "Harm Reduction Resources",
+    "fields": [
+        ["Information and Experiences", "[PsychonautWiki](https://www.psychonautwiki.org)\n[RollSafe](https://rollsafe.org)\n[TripSafe](https://tripsafe.org)\n[Erowid](https://www.erowid.org)\n[The Drug Classroom](https://www.thedrugclassroom.com)\n[TripSit Wiki](https://wiki.tripsit.me/wiki/Main_Page)", "True"],
+        ["Lab Testing and Databases", "[DrugsData/EcstasyData (US)](https://www.ecstasydata.org/)\n[Energy Control (Spain)](https://energycontrol.org/)\n[SaferParty (Switzerland)](https://www.saferparty.ch/allgemein.html)\n[WEDINOS (Wales)](https://www.wedinos.org/)\n[PillReports/EcstasyData](https://www.ecstasydata.org)\n[BunkPolice Vimeo](https://vimeo.com/thebunkpolice)\n[BunkPolice Spectrum Booklets](https://bunkpolice.com/spectrum-booklets/)\n[PillReports](https://pillreports.net)", "True"],
+        ["**Warning**", "Pill presses and blotter art are not reliable methods of identification - these websites should never be used to guess the contents of a drug.", "False"]
+    ]
+}
