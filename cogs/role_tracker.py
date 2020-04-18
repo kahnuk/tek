@@ -14,6 +14,7 @@ with open('data/roles.json') as json_file:
     json_content = json.load(json_file)
     json_roles = json_content['role_commands']
 
+
 class role_tracker(commands.Cog):
 
     def __init__(self, bot):
@@ -81,7 +82,6 @@ class role_tracker(commands.Cog):
             cursor.execute(sql_file, params)
             conn.commit()
         except Error as e:
-            print('Error in execution of: ' + filename)
             print(e)
 
     @commands.command(

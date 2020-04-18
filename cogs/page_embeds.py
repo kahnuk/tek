@@ -2,6 +2,7 @@ import discord
 import asyncio
 import json
 import os
+import aiohttp
 from discord.ext import commands
 from datetime import datetime
 
@@ -18,12 +19,17 @@ class page_embeds(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        with open('config.json') as config:
+            self.json_config = json.load(config)
     
     class paginator:
-        def __init__(self, ctx, command: str):
+        def __init__(self, ctx, command: str, *pages: list):
             self.bot = ctx.bot
-            self.data = commands_data[command]
-            self.pages = self.embed_pages(self.data)
+            if pages:
+                self.pages = pages[0]
+            else:
+                self.data = commands_data[command]
+                self.pages = self.embed_pages(self.data)
             self.max_pages = len(self.pages)-1
             self.msg = ctx.message
             self.paginating = True
@@ -51,9 +57,9 @@ class page_embeds(commands.Cog):
                 embed.set_author(name = data['title'])
 
                 if 'footer' in data:
-                    embed.set_footer(text = str(page_num) + '/' + str(len(data['pages'])) + data['footer'])
+                    embed.set_footer(text = f"{page_num}/{len(data['pages'])} {data['footer']}")
                 else:
-                    embed.set_footer(text = str(page_num) + '/' + str(len(data['pages'])) + '  Please use drugs responsibly')
+                    embed.set_footer(text = f"{page_num}/{len(data['pages'])}  Please use drugs responsibly")
                 if 'image' in data:
                     embed.set_image(url = data['image'])
                 if 'thumbnail' in data:
@@ -227,6 +233,76 @@ class page_embeds(commands.Cog):
         await pages.paginate()
 
 
+
+    @commands.command(
+        name = 'apod',
+        description = "NASA Astronomy Picture of the Day"
+    )
+    async def apod(self, ctx, *date):
+        async with aiohttp.ClientSession() as session:
+            if date:
+                url = f"https://api.nasa.gov/planetary/apod?api_key={self.json_config['apod_key']}&date={date[0]}"
+            else:
+                url = f"https://api.nasa.gov/planetary/apod?api_key={self.json_config['apod_key']}"
+            
+            async with session.get(url) as r:
+                if r.status == 200:
+                    data = await r.json()
+
+        pages = []
+        
+        if data['media_type'] == 'image':
+            page_one = discord.Embed(
+                title = data['title'],
+                colour = 0x7289da,
+                timestamp = datetime.utcnow()
+            )
+            page_one.set_author(name = f"NASA Astronomy Picture of the Day - {data['date']}")
+            page_one.set_image(url = data['url'])
+            if 'copyright' in data:
+                page_one.set_footer(text = f"© {data['copyright']}")
+            pages.append(page_one)
+
+            page_two = discord.Embed(
+            title = data['title'],
+            colour = 0x7289da,
+            description = data['explanation'],
+            timestamp = datetime.utcnow()
+            )
+            page_two.set_author(name = f"NASA Astronomy Picture of the Day - {data['date']}")
+            if 'copyright' in data:
+                page_one.set_footer(text = f"© {data['copyright']}")
+            pages.append(page_two)
+        
+
+
+        if data['media_type'] == 'video':
+            page_one = discord.Embed(
+                title = data['title'],
+                colour = 0x7289da,
+                description = f"Video URL: {data['url']}",
+                timestamp = datetime.utcnow()
+            )
+
+            page_one.set_author(name = f"NASA Astronomy Video of the Day - {data['date']}")
+            if 'copyright' in data:
+                page_one.set_footer(text = f"© {data['copyright']}")
+            pages.append(page_one)
+
+            page_two = discord.Embed(
+            title = data['title'],
+            colour = 0x7289da,
+            description = data['explanation'],
+            timestamp = datetime.utcnow()
+            )
+
+            page_two.set_author(name = f"NASA Astronomy Video of the Day - {data['date']}")
+            if 'copyright' in data:
+                page_one.set_footer(text = f"© {data['copyright']}")
+            pages.append(page_two)
+
+        paginator = self.paginator(ctx, 'apod', pages)
+        await paginator.paginate()
 
 
 def setup(bot):
