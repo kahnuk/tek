@@ -22,11 +22,19 @@ class static_embeds(commands.Cog):
 
     def embed(self, command: str, channel: discord.TextChannel):
         data = commands_data[command]
-        embed = discord.Embed(
+        if 'description' in data:
+            embed = discord.Embed(
+                    title = data['title'],
+                    description = data['description'],
+                    colour = 0x7289da,
+                    timestamp = datetime.utcnow()
+            )
+        else:
+            embed = discord.Embed(
                 title = data['title'],
                 colour = 0x7289da,
                 timestamp = datetime.utcnow()
-        )
+            )
 
         if 'fields' in data:
             for field in data['fields']:
@@ -45,8 +53,9 @@ class static_embeds(commands.Cog):
         
         if 'thumbnail' in data:
             embed.set_thumbnail(url = data['thumbnail'])
-        
+
         asyncio.ensure_future(channel.send(embed = embed))
+        return embed
 
 
     @commands.command(
@@ -167,6 +176,95 @@ class static_embeds(commands.Cog):
         embed.set_author(name = "Bot websocket ping")
         embed.set_footer(text = "Not client ping")
         asyncio.ensure_future(ctx.channel.send(embed = embed))
+
+
+
+    @commands.command(
+        name = 'neurotoxic',
+        description = "Example of MDMA induced neurotoxicity",
+        aliases = commands_data['neurotoxic']['aliases']
+    )
+    async def neurotoxic(self, ctx):
+        self.embed('neurotoxic', ctx.channel)
+
+
+    @commands.command(
+        name = 'rule',
+        description = "Prints rules"
+    )
+    async def rule(self, ctx, rule):
+        rulename = 'rule' + rule
+        self.embed(rulename, ctx.channel)
+
+
+
+    @commands.command(
+        name = 'rule1',
+        description = "Prints rule 1",
+        aliases = commands_data['rule1']['aliases']
+    )
+    async def rule1(self, ctx):
+        self.embed('rule1', ctx.channel)
+
+
+
+    @commands.command(
+        name = 'rule2',
+        description = "Prints rule 2",
+        aliases = commands_data['rule2']['aliases']
+    )
+    async def rule2(self, ctx):
+        self.embed('rule2', ctx.channel)
+
+
+
+    @commands.command(
+        name = 'rule3',
+        description = "Prints rule 3",
+        aliases = commands_data['rule3']['aliases']
+    )
+    async def rule3(self, ctx):
+        self.embed('rule3', ctx.channel)
+
+
+
+    @commands.command(
+        name = 'rule4',
+        description = "Prints rule 4",
+        aliases = commands_data['rule4']['aliases']
+    )
+    async def rule4(self, ctx):
+        self.embed('rule4', ctx.channel)
+
+
+    @commands.command(
+        name = 'rule5',
+        description = "Prints rule 5",
+        aliases = commands_data['rule5']['aliases']
+    )
+    async def rule5(self, ctx):
+        self.embed('rule5', ctx.channel)
+
+
+
+    @commands.command(
+        name = 'rule6',
+        description = "Prints rule 6",
+        aliases = commands_data['rule6']['aliases']
+    )
+    async def rule6(self, ctx):
+        self.embed('rule6', ctx.channel)
+
+
+
+    @commands.command(
+        name = 'rule7',
+        description = "Prints rule 7",
+        aliases = commands_data['rule7']['aliases']
+    )
+    async def rule7(self, ctx):
+        self.embed('rule7', ctx.channel)
+
 
 
 def setup(bot):

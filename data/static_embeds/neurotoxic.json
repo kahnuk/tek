@@ -1,0 +1,8 @@
+{
+    "title": "MDMA Neurotoxicity",
+    "aliases": ["mdmatoxic", "neurotoxicity", "innervation"],
+    "fields": [
+        ["Animal Model Evidence", "This image shows [brain scans](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6782677/) of the neocortex (associated with high-order brain functions such as perception, cognition, motor skills and language) of several monkeys that were treated with heavy doses of MDMA for four consecutive days. The first column shows serotonin innervation prior to treatment, the second shows the effects two weeks after treatment (60-90% reductions), and the third column shows the lasting effects from one binge **seven years later** (20-60% reductions). Each row is a separate monkey. The neurons that have disappeared died due to the exposure to heavy MDMA abuse, and show that these damages take a very long time to heal, potentially showing permanent deficits from just one heavy binge.", "False"]
+    ],
+    "image": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6782677/bin/ns1293095001.jpg"
+}

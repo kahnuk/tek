@@ -1,0 +1,5 @@
+{
+    "aliases": ["id", "identification", "ids"],
+    "title": "__**No substance IDs**__",
+    "description": "We cannot reliably identify drugs from photos or descriptions and attempting to do so is irresponsible. The best way to find out what substance you most likely have is by using a reagent test kit. Use command ``.kits`` for more information"
+}

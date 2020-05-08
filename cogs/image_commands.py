@@ -86,5 +86,14 @@ class image_commands(commands.Cog):
 
 
 
+    @commands.command(
+        name = 'combochart',
+        description = "TripSit Combochart",
+        aliases = commands_data['combochart']['aliases']
+    )
+    async def combochart(self, ctx):
+        await ctx.send(file = discord.File(commands_data['combochart']['image']))
+
+
 def setup(bot):
     bot.add_cog(image_commands(bot))
