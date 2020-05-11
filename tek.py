@@ -49,4 +49,4 @@ async def on_command_error(ctx, error):
 
 
 
-bot.run(json_content['key'])
+bot.run(json_content['beta_key'])

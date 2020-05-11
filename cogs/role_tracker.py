@@ -84,6 +84,33 @@ class role_tracker(commands.Cog):
         except Error as e:
             print(e)
 
+
+
+    @commands.Cog.listener()
+    async def on_member_update(self, before, after):
+        guild = before.guild
+        duration_hrs = 21600
+        expiry = time.time() + duration_hrs
+        #removing
+        if list(set(before.roles) - set(after.roles)):
+            diff = list(set(before.roles) - set(after.roles))
+            if str(diff[0]).casefold() in json_roles:
+                role = discord.utils.get(guild.roles, name = str(diff[0]))
+                if role:
+                    self.sql_execute('delete.sql', guild.id, after.id, role.id)
+
+        else:
+            diff = list(set(after.roles) - set(before.roles))
+            if str(diff[0]).casefold() in json_roles:
+                role = discord.utils.get(guild.roles, name = str(diff[0]))
+                if role:
+                    cursor.execute("SELECT * FROM role_tracker where guild=? AND member=? AND role=?", (guild.id, after.id, role.id))
+                    data = cursor.fetchall()
+                    if not data:
+                        self.sql_execute('insert.sql', guild.id, after.id, role.id, expiry)
+
+
+
     @commands.command(
         name = 'role',
         description = "Manages various status roles",
@@ -91,9 +118,9 @@ class role_tracker(commands.Cog):
     )
     async def change_role(self, ctx):
         if ctx.invoked_with == 'gabaergic':
-            self.check_member_roles(ctx.guild, ctx.author, discord.utils.get(ctx.guild.roles, name = 'GABAergic'), ctx.channel, 30)
+            self.check_member_roles(ctx.guild, ctx.author, discord.utils.get(ctx.guild.roles, name = 'GABAergic'), ctx.channel, 6)
         if discord.utils.get(ctx.guild.roles, name = ctx.invoked_with.capitalize()):
-            self.check_member_roles(ctx.guild, ctx.author, discord.utils.get(ctx.guild.roles, name = ctx.invoked_with.capitalize()), ctx.channel, 30)
+            self.check_member_roles(ctx.guild, ctx.author, discord.utils.get(ctx.guild.roles, name = ctx.invoked_with.capitalize()), ctx.channel, 6)
         asyncio.ensure_future(ctx.message.delete())
         
 

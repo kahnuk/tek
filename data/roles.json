@@ -1,5 +1,5 @@
 {
-"role_commands": ["drunk", "stoned"],
+"role_commands": ["drunk", "stoned", "delirious", "rolling", "stimmed", "nodding", "dissod", "barred", "comedown", "tripping"],
 "506956876215222293": {
     "bot_channel": "606658849293991941"
 },
