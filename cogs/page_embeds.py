@@ -228,7 +228,7 @@ class page_embeds(commands.Cog):
         name = 'help',
         description = 'Help command'
     )
-    async def help_cmd(self, ctx):
+    async def help(self, ctx):
         pages = self.paginator(ctx, 'help')
         await pages.paginate()
 
