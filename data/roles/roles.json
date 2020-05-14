@@ -1,0 +1,44 @@
+{
+"aliases": {
+    "high": "stoned",
+    "baked": "stoned",
+    "sloshed": "drunk",
+    "disso": "dissod"
+},
+"roles": {
+    "drunk": {
+        "expiry": "6"
+    },
+    "stoned": {
+        "expiry": "6"
+    },
+    "rolling": {
+        "expiry": "6"
+    },
+    "nodding": {
+        "expiry": "8"
+    },
+    "barred": {
+        "expiry": "8"
+    },
+    "stimmed": {
+        "expiry": "8"
+    },
+    "gabaergic": {
+        "expiry": "8"
+    },
+    "dissod": {
+        "expiry": "12"
+    },
+    "tripping": {
+        "expiry": "12"
+    },
+    "delirious": {
+        "expiry": "12"
+    },
+    "comedown": {
+        "expiry": "12"
+    }
+}
+}
+

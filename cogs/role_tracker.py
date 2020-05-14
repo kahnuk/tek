@@ -10,10 +10,15 @@ database = 'db/role_tracker.db'
 conn = sqlite3.connect(database)
 cursor = conn.cursor()
 
-with open('data/roles.json') as json_file:
+with open('data/roles/roles.json') as json_file:
     json_content = json.load(json_file)
-    json_roles = json_content['role_commands']
+    json_roles = json_content['roles']
+    role_list = list(json_roles.keys())
+    print(role_list)
 
+with open('config.json') as json_config:
+    json_config_content = json.load(json_config)
+    json_guilds = json_config_content['guilds']
 
 class role_tracker(commands.Cog):
 
@@ -34,9 +39,7 @@ class role_tracker(commands.Cog):
                 guild = self.bot.get_guild(row[0])
                 member = guild.get_member(row[1])
                 role = discord.utils.get(guild.roles, id = row[2])
-                bot_channel_id = int(json_content[str(row[0])]['bot_channel'])
-                bot_channel = discord.utils.get(guild.text_channels, id = bot_channel_id)
-                self.remove_role(guild, member, role, bot_channel)
+                self.check_member_roles(guild, member, role)
 
 
 
@@ -46,11 +49,15 @@ class role_tracker(commands.Cog):
 
 
 
-    def check_member_roles(self, guild: discord.Guild, member: discord.Member, role: discord.Role, channel: discord.TextChannel, duration: int):
+    def check_member_roles(self, guild: discord.Guild, member: discord.Member, role: discord.Role, * channel: discord.TextChannel):
+        if not channel:
+            channel = discord.utils.get(guild.text_channels, id = int(json_guilds[str(guild.id)]['bot_channel']))
+        else:
+            channel = channel[0]
         if role in member.roles:
             self.remove_role(guild, member, role, channel)
         else:
-            self.add_role(guild, member, role, channel, duration)
+            self.add_role(guild, member, role, channel)
 
 
 
@@ -62,11 +69,12 @@ class role_tracker(commands.Cog):
         self.sql_execute('delete.sql', guild.id, member.id, role.id)
 
 
-    def add_role(self, guild: discord.Guild, member: discord.Member, role: discord.Role, channel: discord.TextChannel, duration: int):
-        duration_hrs = duration * 3600
-        expiry = time.time() + duration_hrs
+    def add_role(self, guild: discord.Guild, member: discord.Member, role: discord.Role, channel: discord.TextChannel):
+        role_name = str(role.name).casefold()
+        duration = int(json_roles[role_name]['expiry'])
+        expiry = time.time() + duration * 3600
         embed = discord.Embed(colour = 0x7289da)
-        embed.add_field(name = "**Roles Updated**", value = f"Role **'{role}'** added to: {member.mention}", inline = False)
+        embed.add_field(name = "**Roles Updated**", value = f"Role **'{role.name}'** added to: {member.mention}", inline = False)
         asyncio.ensure_future(channel.send(embed = embed, delete_after = 5))
         asyncio.ensure_future(member.add_roles(role))
         self.sql_execute('insert.sql', guild.id, member.id, role.id, expiry)
@@ -87,40 +95,45 @@ class role_tracker(commands.Cog):
 
 
     @commands.Cog.listener()
-    async def on_member_update(self, before, after):
+    async def on_member_update(self, before: discord.Member, after: discord.Member):
         guild = before.guild
-        duration_hrs = 21600
-        expiry = time.time() + duration_hrs
-        #removing
-        if list(set(before.roles) - set(after.roles)):
-            diff = list(set(before.roles) - set(after.roles))
-            if str(diff[0]).casefold() in json_roles:
-                role = discord.utils.get(guild.roles, name = str(diff[0]))
-                if role:
-                    self.sql_execute('delete.sql', guild.id, after.id, role.id)
+        before_set = set(before.roles)
+        after_set = set(after.roles)
+        if not after_set == before_set:
+            diff = after_set.symmetric_difference(before_set)
+            role = diff.pop()
+            self.listener_check_roles(guild, after, role)
+    
 
+    def listener_check_roles(self, guild: discord.Guild, member: discord.Member, role: discord.Role):
+        if role in member.roles:
+            role_name = str(role.name).casefold()
+            duration = int(json_roles[role_name]['expiry']) * 3600
+            expiry = time.time() + duration
+            cursor.execute("SELECT * FROM role_tracker where guild=? AND member=? AND role=?", (guild.id, member.id, role.id))
+            data = cursor.fetchall()
+            if not data:
+                self.sql_execute('insert.sql', guild.id, member.id, role.id, expiry)
         else:
-            diff = list(set(after.roles) - set(before.roles))
-            if str(diff[0]).casefold() in json_roles:
-                role = discord.utils.get(guild.roles, name = str(diff[0]))
-                if role:
-                    cursor.execute("SELECT * FROM role_tracker where guild=? AND member=? AND role=?", (guild.id, after.id, role.id))
-                    data = cursor.fetchall()
-                    if not data:
-                        self.sql_execute('insert.sql', guild.id, after.id, role.id, expiry)
+            self.sql_execute('delete.sql', guild.id, member.id, role.id)
 
 
 
     @commands.command(
         name = 'role',
         description = "Manages various status roles",
-        aliases = json_roles
+        aliases = role_list
     )
     async def change_role(self, ctx):
-        if ctx.invoked_with == 'gabaergic':
-            self.check_member_roles(ctx.guild, ctx.author, discord.utils.get(ctx.guild.roles, name = 'GABAergic'), ctx.channel, 6)
-        if discord.utils.get(ctx.guild.roles, name = ctx.invoked_with.capitalize()):
-            self.check_member_roles(ctx.guild, ctx.author, discord.utils.get(ctx.guild.roles, name = ctx.invoked_with.capitalize()), ctx.channel, 6)
+        if ctx.invoked_with in json_roles:
+            role_name = ctx.invoked_with.capitalize()
+        if ctx.invoked_with in json_content['aliases']:
+            role_name = json_content['aliases'][ctx.invoked_with].capitalize()
+        if role_name == 'gabaergic':
+            role_name = 'GABAergic'
+        
+        role = discord.utils.get(ctx.guild.roles, name = role_name)
+        self.check_member_roles(ctx.guild, ctx.author, role, ctx.channel)
         asyncio.ensure_future(ctx.message.delete())
         
 
