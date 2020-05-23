@@ -42,7 +42,8 @@ class role_tracker(commands.Cog):
                     role = discord.utils.get(guild.roles, id = row[2])
                     self.check_member_roles(guild, member, role)
                 except:
-                    print('Member ' + member + ' does not exist.')
+                    print('Member ' + str(row[1]) + ' does not exist.')
+                    self.sql_execute('delete.sql', row[0], row[1], row[2])
 
 
 
