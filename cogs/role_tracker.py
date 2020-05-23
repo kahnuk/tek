@@ -42,7 +42,7 @@ class role_tracker(commands.Cog):
                     role = discord.utils.get(guild.roles, id = row[2])
                     self.check_member_roles(guild, member, role)
                 except:
-                    print('Member ' & member & ' does not exist.')
+                    print('Member ' + member + ' does not exist.')
 
 
 
