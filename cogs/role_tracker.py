@@ -129,7 +129,7 @@ class role_tracker(commands.Cog):
             role_name = ctx.invoked_with.capitalize()
         if ctx.invoked_with in json_content['aliases']:
             role_name = json_content['aliases'][ctx.invoked_with].capitalize()
-        if role_name == 'gabaergic':
+        if ctx.invoked_with == 'gabaergic':
             role_name = 'GABAergic'
         
         role = discord.utils.get(ctx.guild.roles, name = role_name)
