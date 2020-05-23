@@ -7,34 +7,34 @@
 },
 "roles": {
     "drunk": {
-        "expiry": "6"
+        "expiry": "10"
     },
     "stoned": {
-        "expiry": "6"
+        "expiry": "10"
     },
     "rolling": {
-        "expiry": "6"
+        "expiry": "10"
     },
     "nodding": {
-        "expiry": "8"
+        "expiry": "12"
     },
     "barred": {
-        "expiry": "8"
+        "expiry": "12"
     },
     "stimmed": {
-        "expiry": "8"
+        "expiry": "12"
     },
     "gabaergic": {
-        "expiry": "12"
+        "expiry": "16"
     },
     "dissod": {
-        "expiry": "12"
+        "expiry": "16"
     },
     "tripping": {
-        "expiry": "12"
+        "expiry": "24"
     },
     "delirious": {
-        "expiry": "12"
+        "expiry": "24"
     },
     "comedown": {
         "expiry": "12"
