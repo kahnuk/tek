@@ -14,7 +14,6 @@ with open('data/roles/roles.json') as json_file:
     json_content = json.load(json_file)
     json_roles = json_content['roles']
     role_list = list(json_roles.keys())
-    print(role_list)
 
 with open('config.json') as json_config:
     json_config_content = json.load(json_config)
