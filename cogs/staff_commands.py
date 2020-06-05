@@ -52,10 +52,12 @@ class staff_commands(commands.Cog):
         embed = discord.Embed(
             title = "Verified User",
             description = f"User {user.mention} has been verified by {ctx.author.mention}{reason_str}",
-            colour = 0x7289da
+            colour = 0x7289da,
+            timestamp = datetime.utcnow()
         )
         embed.set_thumbnail(url = user.avatar_url)
-        verified_channel = discord.utils.get(ctx.guild.text_channels, id = int(476400912307453962))
+        embed.set_footer(text = f"User ID: {user.id}")
+        verified_channel = discord.utils.get(ctx.guild.text_channels, id = int(655009478936363008))
         await verified_channel.send(embed = embed)
 def setup(bot):
     bot.add_cog(staff_commands(bot))
