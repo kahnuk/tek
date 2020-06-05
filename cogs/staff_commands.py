@@ -51,7 +51,7 @@ class staff_commands(commands.Cog):
         await user.remove_roles(verification)
         embed = discord.Embed(
             title = "Verified User",
-            description = f"User {user.mention} has been verified by {ctx.author.mention}{reason_str}",
+            description = f"User {user.name} [UID:{user.id}] has been verified by {ctx.author.name}{reason_str}",
             colour = 0x7289da,
             timestamp = datetime.utcnow()
         )
