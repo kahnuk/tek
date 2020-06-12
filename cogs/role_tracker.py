@@ -15,11 +15,9 @@ with open('data/roles/roles.json') as json_file:
     json_roles = json_content['roles']
     json_aliases = json_content['aliases']
     
-    print(json_content['aliases']['gaba'].capitalize())
     role_list = list(json_roles.keys())
     alias_list = list(json_content['aliases'].keys())
     roles = role_list + alias_list
-    print(roles)
 
 with open('config.json') as json_config:
     json_config_content = json.load(json_config)

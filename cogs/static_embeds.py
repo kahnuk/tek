@@ -267,5 +267,40 @@ class static_embeds(commands.Cog):
 
 
 
+    @commands.command(
+        name = 'gtoke',
+        description = "Starts a group toke",
+        aliases = commands_data['gtoke']['aliases']
+    )
+    async def gtoke(self, ctx):
+        emotes = ['<:Weeed:581023462534021120>', '<:weed:255964645561466880>', '<:smoke:478661373417619476>', '<:pepetoke:502604660927102977>', '<:musky:487937634157461505>', '<:joint:585773581980663811>', '<:blunt:585774074094026763>', '<:bongface:456821076387823626>']
+        bot_message = await ctx.channel.send(f"{ctx.author.name} has started a group toke - use the reaction to join in! Toke up in: two minutes")
+        emote = random.choice(emotes)
+        reaction_add = await bot_message.add_reaction(emote)
+        cached_message = await ctx.channel.fetch_message(bot_message.id)
+        users = list()
+        while True:
+            try:
+                reaction, user = await self.bot.wait_for('reaction_add', timeout=60)
+                if str(reaction) == str(emote):
+                    if not str(user.name) in users:
+                        users.append(str(user.name))
+            except asyncio.TimeoutError:
+                break
+        bot_message = await ctx.channel.send("Group toke commencing in one minute! Use the reaction to join in")
+        emote = random.choice(emotes)
+        reaction_add = await bot_message.add_reaction(emote)
+        cached_message = await ctx.channel.fetch_message(bot_message.id)
+        while True:
+            try:
+                reaction, user = await self.bot.wait_for('reaction_add', timeout=60)
+                if str(reaction) == str(emote):
+                    if not str(user.name) in users:
+                        users.append(str(user.name))
+            except asyncio.TimeoutError:
+                break
+        finished_users = ', '.join(users)
+        await ctx.channel.send(f"{finished_users} toked up! {emote}")
+        
 def setup(bot):
     bot.add_cog(static_embeds(bot))
