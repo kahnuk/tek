@@ -134,7 +134,6 @@ class role_tracker(commands.Cog):
             role_name = json_content['aliases'][ctx.invoked_with].capitalize()
         if ctx.invoked_with == 'gabaergic':
             role_name = 'GABAergic'
-        
         role = discord.utils.get(ctx.guild.roles, name = role_name)
         self.check_member_roles(ctx.guild, ctx.author, role, ctx.channel)
         asyncio.ensure_future(ctx.message.delete())

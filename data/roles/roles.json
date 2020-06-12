@@ -3,7 +3,8 @@
     "high": "stoned",
     "baked": "stoned",
     "sloshed": "drunk",
-    "disso": "dissod"
+    "disso": "dissod",
+    "gaba": "gabaergic"
 },
 "roles": {
     "drunk": {

@@ -29,7 +29,7 @@ class staff_commands(commands.Cog):
         await user.add_roles(verification)
         embed = discord.Embed(
             title = "Success!",
-            description = f"User {user.mention} has been put in verification.",
+            description = f"User **{user.name} [{user.id}]** has been put in verification.",
             colour = 0x7289da
         )
         embed.set_thumbnail(url = user.avatar_url)
@@ -51,7 +51,7 @@ class staff_commands(commands.Cog):
         await user.remove_roles(verification)
         embed = discord.Embed(
             title = "Verified User",
-            description = f"User {user.name} [UID:{user.id}] has been verified by {ctx.author.name}{reason_str}",
+            description = f"User **{user.name} [{user.id}]** has been verified by **{ctx.author.name}**{reason_str}",
             colour = 0x7289da,
             timestamp = datetime.utcnow()
         )
