@@ -270,7 +270,7 @@ class static_embeds(commands.Cog):
     @commands.command(
         name = 'gtoke',
         description = "Starts a group toke",
-        aliases = commands_data['gtoke']['aliases']
+        aliases = ['toke', 'tokeup', 'grouptoke']
     )
     async def gtoke(self, ctx):
         emotes = ['<:Weeed:581023462534021120>', '<:weed:255964645561466880>', '<:smoke:478661373417619476>', '<:pepetoke:502604660927102977>', '<:musky:487937634157461505>', '<:joint:585773581980663811>', '<:blunt:585774074094026763>', '<:bongface:456821076387823626>']
