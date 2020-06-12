@@ -279,7 +279,7 @@ class static_embeds(commands.Cog):
         reaction_add = await bot_message.add_reaction(emote)
         cached_message = await ctx.channel.fetch_message(bot_message.id)
         users = list()
-	users.append(str(ctx.author.display_name))
+        users.append(str(ctx.author.display_name))
         while True:
             try:
                 reaction, user = await self.bot.wait_for('reaction_add', timeout=60)
