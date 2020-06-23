@@ -8,7 +8,7 @@ from discord.ext import commands
 
 verification_users = {}
 
-class staff_commands(commands.Cog):
+class utility_commands(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -59,5 +59,33 @@ class staff_commands(commands.Cog):
         embed.set_footer(text = f"User ID: {user.id}")
         verified_channel = discord.utils.get(ctx.guild.text_channels, id = int(655009478936363008))
         await verified_channel.send(embed = embed)
+
+    @commands.has_role(725060079568551936)
+    @commands.command(
+        name = 'colour',
+        aliases = ['color']
+    )
+    async def colour(self, ctx, r: int, g: int, b: int):
+        rgb = [r, g, b]
+        comedown = discord.utils.get(ctx.guild.roles, name = 'Drunk')
+        booster = discord.utils.get(ctx.guild.roles, name = 'Booster')
+        range_list = list(range(booster.position, comedown.position))
+        if all(0 <= i <= 255 for i in rgb):
+            role_colour = discord.Colour.from_rgb(r, g, b)
+            if not discord.utils.get(ctx.guild.roles, name = ctx.author.name):
+                new_role = await ctx.guild.create_role(name = ctx.author.name)
+                await new_role.edit(colour = role_colour, position = range_list[1])
+                await ctx.author.add_roles(new_role)
+            else:
+                new_role = await discord.utils.get(ctx.guild.roles, name = ctx.author.name).edit(colour = role_colour, position = range_list[1])
+            embed = discord.Embed(
+                title = "Custom colour applied!",
+                description = f"Applied colour **[{r}, {g}, {b}]** to **{ctx.author.display_name}**!",
+                colour = role_colour
+            )
+            await ctx.channel.send(embed = embed)
+        else:
+            await ctx.channel.send('**Error:** That is not a valid RGB colour code!')
+
 def setup(bot):
-    bot.add_cog(staff_commands(bot))
+    bot.add_cog(utility_commands(bot))

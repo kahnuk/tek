@@ -284,7 +284,7 @@ class static_embeds(commands.Cog):
             try:
                 reaction, user = await self.bot.wait_for('reaction_add', timeout=60)
                 if str(reaction) == str(emote):
-                    if not str(user.name) in users:
+                    if not str(user.display_name) in users:
                         users.append(str(user.display_name))
             except asyncio.TimeoutError:
                 break
@@ -296,7 +296,7 @@ class static_embeds(commands.Cog):
             try:
                 reaction, user = await self.bot.wait_for('reaction_add', timeout=60)
                 if str(reaction) == str(emote):
-                    if not str(user.name) in users:
+                    if not str(user.display_name) in users:
                         users.append(str(user.display_name))
             except asyncio.TimeoutError:
                 break
