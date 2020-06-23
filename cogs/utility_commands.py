@@ -75,7 +75,7 @@ class utility_commands(commands.Cog):
             if not discord.utils.get(ctx.guild.roles, name = ctx.author.name):
                 await ctx.guild.create_role(name = ctx.author.name)
                 new_role = await discord.utils.get(ctx.guild.roles, name = ctx.author.name)
-		await new_role.edit(colour = role_colour, position = range_list[1])
+                await new_role.edit(colour = role_colour, position = range_list[1])
                 await ctx.author.add_roles(new_role)
             else:
                 new_role = await discord.utils.get(ctx.guild.roles, name = ctx.author.name).edit(colour = role_colour, position = range_list[1])
