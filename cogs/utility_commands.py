@@ -60,16 +60,16 @@ class utility_commands(commands.Cog):
         verified_channel = discord.utils.get(ctx.guild.text_channels, id = int(655009478936363008))
         await verified_channel.send(embed = embed)
 
-    @commands.has_role(725060079568551936)
+    @commands.has_role(289876378868908042)
     @commands.command(
         name = 'colour',
         aliases = ['color']
     )
     async def colour(self, ctx, r: int, g: int, b: int):
         rgb = [r, g, b]
-        comedown = discord.utils.get(ctx.guild.roles, name = 'Drunk')
-        booster = discord.utils.get(ctx.guild.roles, name = 'Booster')
-        range_list = list(range(booster.position, comedown.position))
+        comedown = discord.utils.get(ctx.guild.roles, name = 'Comedown')
+        kingpin = discord.utils.get(ctx.guild.roles, name = 'Kingpin 👾')
+        range_list = list(range(kingpin.position, comedown.position))
         if all(0 <= i <= 255 for i in rgb):
             role_colour = discord.Colour.from_rgb(r, g, b)
             if not discord.utils.get(ctx.guild.roles, name = ctx.author.name):
