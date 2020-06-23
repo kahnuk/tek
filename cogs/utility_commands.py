@@ -73,8 +73,9 @@ class utility_commands(commands.Cog):
         if all(0 <= i <= 255 for i in rgb):
             role_colour = discord.Colour.from_rgb(r, g, b)
             if not discord.utils.get(ctx.guild.roles, name = ctx.author.name):
-                new_role = await ctx.guild.create_role(name = ctx.author.name)
-                await new_role.edit(colour = role_colour, position = range_list[1])
+                await ctx.guild.create_role(name = ctx.author.name)
+                new_role = await discord.utils.get(ctx.guild.roles, name = ctx.author.name)
+		await new_role.edit(colour = role_colour, position = range_list[1])
                 await ctx.author.add_roles(new_role)
             else:
                 new_role = await discord.utils.get(ctx.guild.roles, name = ctx.author.name).edit(colour = role_colour, position = range_list[1])
