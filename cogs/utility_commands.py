@@ -60,7 +60,7 @@ class utility_commands(commands.Cog):
         verified_channel = discord.utils.get(ctx.guild.text_channels, id = int(655009478936363008))
         await verified_channel.send(embed = embed)
 
-    @commands.has_role(289876378868908042)
+    @commands.has_role(585558166834774047)
     @commands.command(
         name = 'colour',
         aliases = ['color']
@@ -73,9 +73,8 @@ class utility_commands(commands.Cog):
         if all(0 <= i <= 255 for i in rgb):
             role_colour = discord.Colour.from_rgb(r, g, b)
             if not discord.utils.get(ctx.guild.roles, name = ctx.author.name):
-                await ctx.guild.create_role(name = ctx.author.name)
-                new_role = await discord.utils.get(ctx.guild.roles, name = ctx.author.name)
-                await new_role.edit(colour = role_colour, position = range_list[1])
+                new_role = await ctx.guild.create_role(name = ctx.author.name, colour = role_colour)
+                await new_role.edit(position = range_list[1])
                 await ctx.author.add_roles(new_role)
             else:
                 new_role = await discord.utils.get(ctx.guild.roles, name = ctx.author.name).edit(colour = role_colour, position = range_list[1])
