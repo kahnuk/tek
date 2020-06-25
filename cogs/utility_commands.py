@@ -87,5 +87,66 @@ class utility_commands(commands.Cog):
         else:
             await ctx.channel.send('**Error:** That is not a valid RGB colour code!')
 
+
+
+    @commands.command(
+        name = 'gtoke',
+        description = "Starts a group toke",
+        aliases = ['tokeup', 'sesh']
+    )
+    async def gtoke(self, ctx):
+        emotes = ['<:Weeed:581023462534021120>', '<:weed:255964645561466880>', '<:smoke:478661373417619476>', '<:pepetoke:502604660927102977>', '<:musky:487937634157461505>', '<:joint:585773581980663811>', '<:blunt:585774074094026763>', '<:bongface:456821076387823626>']
+        bot_message = await ctx.channel.send(f"{ctx.author.display_name} has started a group toke - use the reaction to join in! Toke up in: two minutes")
+        emote = random.choice(emotes)
+        reaction_add = await bot_message.add_reaction(emote)
+        cached_message = await ctx.channel.fetch_message(bot_message.id)
+        users = list()
+        users.append(str(ctx.author.display_name))
+        while True:
+            try:
+                reaction, user = await self.bot.wait_for('reaction_add', timeout=60)
+                if str(reaction) == str(emote):
+                    if not str(user.display_name) in users:
+                        users.append(str(user.display_name))
+            except asyncio.TimeoutError:
+                break
+        bot_message = await ctx.channel.send("Group toke commencing in one minute! Use the reaction to join in")
+        emote = random.choice(emotes)
+        reaction_add = await bot_message.add_reaction(emote)
+        cached_message = await ctx.channel.fetch_message(bot_message.id)
+        while True:
+            try:
+                reaction, user = await self.bot.wait_for('reaction_add', timeout=60)
+                if str(reaction) == str(emote):
+                    if not str(user.display_name) in users:
+                        users.append(str(user.display_name))
+            except asyncio.TimeoutError:
+                break
+        bot_message = await ctx.channel.send("Group toke commencing in 30 seconds! Use the reaction to join in")
+        emote = random.choice(emotes)
+        reaction_add = await bot_message.add_reaction(emote)
+        cached_message = await ctx.channel.fetch_message(bot_message.id)
+        while True:
+            try:
+                reaction, user = await self.bot.wait_for('reaction_add', timeout=25)
+                if str(reaction) == str(emote):
+                    if not str(user.display_name) in users:
+                        users.append(str(user.display_name))
+            except asyncio.TimeoutError:
+                break
+        timer = 5
+        msg = await ctx.channel.send("5...")
+        for i in range(timer):
+            timer = timer - 1
+            await asyncio.sleep(1)
+            if not timer == 0:
+                await msg.edit(content=f'{timer}...')
+            else:
+                await msg.edit(content='Toke up!')
+        await asyncio.sleep(3)
+        finished_users = ', '.join(users)
+        await ctx.channel.send(f"{finished_users} toked up! {emote}")
+
+
 def setup(bot):
     bot.add_cog(utility_commands(bot))
