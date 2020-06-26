@@ -89,6 +89,20 @@ class utility_commands(commands.Cog):
 
 
 
+    @commands.has_role(401512090449215489)
+    @commands.command(
+        name = 'triptoggle',
+        aliases = ['toggletrip']
+    )
+    async def triptoggle(self, ctx, member: discord.Member):
+        trip_role = discord.utils.get(ctx.guild.roles, name = 'Tripping')
+        if trip_role in member.roles:
+            await member.remove_roles(trip_role)
+            await ctx.channel.send(f"The tripping role has been taken off {member.display_name}.")
+        else:
+            await member.add_roles(trip_role)
+            await ctx.channel.send(f"{member.display_name} has been given the tripping role.")
+
     @commands.command(
         name = 'gtoke',
         description = "Starts a group toke",
