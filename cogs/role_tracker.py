@@ -23,14 +23,18 @@ with open('config.json') as json_config:
     json_config_content = json.load(json_config)
     json_guilds = json_config_content['guilds']
 
+def is_in_guild(guild_id):
+    async def predicate(ctx):
+        return ctx.guild and ctx.guild.id == guild_id
+    return commands.check(predicate)
+
+
 class role_tracker(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
         self.sql_execute('create_table.sql')
         self.check_role_table.start()
-
-
 
     @tasks.loop(seconds = 60.0)
     #Check the role table every 60 seconds for entries where the timestamp has passed and pass them to func role_toggle, then clear the entry
@@ -100,16 +104,16 @@ class role_tracker(commands.Cog):
             print(e)
 
 
-
     @commands.Cog.listener()
     async def on_member_update(self, before: discord.Member, after: discord.Member):
         guild = before.guild
-        before_set = set(before.roles)
-        after_set = set(after.roles)
-        if not after_set == before_set:
-            diff = after_set.symmetric_difference(before_set)
-            role = diff.pop()
-            self.listener_check_roles(guild, after, role)
+        if guild.id == 253612214148136981:
+            before_set = set(before.roles)
+            after_set = set(after.roles)
+            if not after_set == before_set:
+                diff = after_set.symmetric_difference(before_set)
+                role = diff.pop()
+                self.listener_check_roles(guild, after, role)
     
 
     def listener_check_roles(self, guild: discord.Guild, member: discord.Member, role: discord.Role):

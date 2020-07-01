@@ -4,12 +4,19 @@ import asyncio
 import os
 import random
 from datetime import datetime
-from discord.ext import commands
+from discord.ext import tasks, commands
 
 verification_users = {}
 
-class utility_commands(commands.Cog):
 
+def is_in_guild(guild_id):
+        async def predicate(ctx):
+            return ctx.guild and ctx.guild.id == guild_id
+        return commands.check(predicate)
+
+
+class utility_commands(commands.Cog):
+    
     def __init__(self, bot):
         self.bot = bot
 
@@ -60,6 +67,8 @@ class utility_commands(commands.Cog):
         verified_channel = discord.utils.get(ctx.guild.text_channels, id = int(655009478936363008))
         await verified_channel.send(embed = embed)
 
+
+    @is_in_guild(253612214148136981)
     @commands.has_role(585558166834774047)
     @commands.command(
         name = 'colour',
@@ -87,7 +96,19 @@ class utility_commands(commands.Cog):
         else:
             await ctx.channel.send('**Error:** That is not a valid RGB colour code!')
 
-
+    @commands.command(
+        name = 'clearcolour',
+        aliases = ['clearcolor']
+    )
+    async def clearcolour(self, ctx):
+        colour_role = discord.utils.get(ctx.guild.roles, name = ctx.author.name)
+        if colour_role:
+            await colour_role.delete()
+            await ctx.channel.send(f"Custom role for {ctx.author.display_name} deleted.")
+    
+    #@colour.error
+    #async def colour_guild_error(self, ctx, error):
+    #    await ctx.send('This feature is not enabled on this server.')
 
     @commands.has_role(401512090449215489)
     @commands.command(
@@ -160,6 +181,32 @@ class utility_commands(commands.Cog):
         await asyncio.sleep(3)
         finished_users = ', '.join(users)
         await ctx.channel.send(f"{finished_users} toked up! {emote}")
+
+
+    with open('data/special/submissions_users.json') as infile:
+        submissions_users = json.load(infile)
+
+    @commands.Cog.listener()
+    async def on_message(self, ctx):
+        if ctx.channel.id == 727939253631320145:
+            if not ctx.attachments:
+                return
+            else:
+                if str(ctx.author.id) in self.submissions_users:
+                    submissions = self.submissions_users[str(ctx.author.id)]
+                    submissions = submissions + 1
+                    self.submissions_users[str(ctx.author.id)] = submissions
+                    if submissions >= 4:
+                        await ctx.delete()
+                        await ctx.channel.send(f"Sorry {ctx.author.display_name}, you have hit the three submission limit! Contact kanuk if you believe this is an error.", delete_after = 5)
+                    else:
+                        await ctx.channel.send(f"Thank you {ctx.author.display_name} for submitting a banner ({submissions}/3)", delete_after = 5)
+                else:
+                    self.submissions_users[str(ctx.author.id)] = 1
+                    await ctx.channel.send(f"Thank you {ctx.author.display_name} for submitting a banner (1/3)", delete_after = 5)
+                with open('data/special/submissions_users.json', 'w') as outfile:
+                    json.dump(self.submissions_users, outfile, sort_keys=True, indent=4)
+
 
 
 def setup(bot):
