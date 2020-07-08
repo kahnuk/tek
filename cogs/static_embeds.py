@@ -197,7 +197,7 @@ class static_embeds(commands.Cog):
         self.embed(rulename, ctx.channel)
 
 
-
+    @is_in_guild(253612214148136981)
     @commands.command(
         name = 'rule1',
         description = "Prints rule 1",
@@ -207,7 +207,7 @@ class static_embeds(commands.Cog):
         self.embed('rule1', ctx.channel)
 
 
-
+    @is_in_guild(253612214148136981)
     @commands.command(
         name = 'rule2',
         description = "Prints rule 2",
@@ -217,7 +217,7 @@ class static_embeds(commands.Cog):
         self.embed('rule2', ctx.channel)
 
 
-
+    @is_in_guild(253612214148136981)
     @commands.command(
         name = 'rule3',
         description = "Prints rule 3",
@@ -227,7 +227,7 @@ class static_embeds(commands.Cog):
         self.embed('rule3', ctx.channel)
 
 
-
+    @is_in_guild(253612214148136981)
     @commands.command(
         name = 'rule4',
         description = "Prints rule 4",
@@ -236,7 +236,7 @@ class static_embeds(commands.Cog):
     async def rule4(self, ctx):
         self.embed('rule4', ctx.channel)
 
-
+    @is_in_guild(253612214148136981)
     @commands.command(
         name = 'rule5',
         description = "Prints rule 5",
@@ -246,7 +246,7 @@ class static_embeds(commands.Cog):
         self.embed('rule5', ctx.channel)
 
 
-
+    @is_in_guild(253612214148136981)
     @commands.command(
         name = 'rule6',
         description = "Prints rule 6",
@@ -256,7 +256,7 @@ class static_embeds(commands.Cog):
         self.embed('rule6', ctx.channel)
 
 
-
+    @is_in_guild(253612214148136981)
     @commands.command(
         name = 'rule7',
         description = "Prints rule 7",
