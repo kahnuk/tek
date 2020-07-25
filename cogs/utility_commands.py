@@ -205,31 +205,6 @@ class utility_commands(commands.Cog):
         await ctx.channel.send(f"{finished_users} toked up! {emote}")
 
 
-    with open('data/special/submissions_users.json') as infile:
-        submissions_users = json.load(infile)
-
-    @commands.Cog.listener()
-    async def on_message(self, ctx):
-        if ctx.channel.id == 727939253631320145:
-            if not ctx.attachments:
-                return
-            else:
-                if str(ctx.author.id) in self.submissions_users:
-                    submissions = self.submissions_users[str(ctx.author.id)]
-                    submissions = submissions + 1
-                    self.submissions_users[str(ctx.author.id)] = submissions
-                    if submissions >= 4:
-                        await ctx.delete()
-                        await ctx.channel.send(f"Sorry {ctx.author.display_name}, you have hit the three submission limit! Contact kanuk if you believe this is an error.", delete_after = 5)
-                    else:
-                        await ctx.channel.send(f"Thank you {ctx.author.display_name} for submitting a banner ({submissions}/3)", delete_after = 5)
-                else:
-                    self.submissions_users[str(ctx.author.id)] = 1
-                    await ctx.channel.send(f"Thank you {ctx.author.display_name} for submitting a banner (1/3)", delete_after = 5)
-                with open('data/special/submissions_users.json', 'w') as outfile:
-                    json.dump(self.submissions_users, outfile, sort_keys=True, indent=4)
-
-
 
 def setup(bot):
     bot.add_cog(utility_commands(bot))
