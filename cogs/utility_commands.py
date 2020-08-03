@@ -7,7 +7,7 @@ from datetime import datetime
 from discord.ext import tasks, commands
 
 verification_users = {}
-
+chill_users = {}
 
 def is_in_guild(guild_id):
         async def predicate(ctx):
@@ -44,6 +44,40 @@ class utility_commands(commands.Cog):
         )
         embed.set_thumbnail(url = user.avatar_url)
         await ctx.send(embed = embed)
+
+    @commands.has_any_role(401512090449215489)
+    @commands.command(
+        name = 'chill',
+        description = "Chill toggle"
+    )
+    async def chill(self, ctx, user: discord.Member):
+        chill = discord.utils.get(ctx.guild.roles, id = 739272333512147066)
+        user_roles = user.roles[1:]
+        if not chill in user.roles:
+            if not str(user.id) in chill_users:
+                chill_users[str(user.id)] = user_roles
+            for i in user.roles[1:]:
+                await user.remove_roles(i)
+            await user.add_roles(chill)
+            embed = discord.Embed(
+                title = "Success!",
+                description = f"User **{user.name}** has been chilled!",
+                colour = 0x7289da
+            )
+            embed.set_thumbnail(url = user.avatar_url)
+            await ctx.send(embed = embed)
+        else:
+            if str(user.id) in chill_users:
+                for i in chill_users[str(user.id)]:
+                    await user.add_roles(i)
+            await user.remove_roles(chill)
+            embed = discord.Embed(
+                title = "Success!",
+                description = f"User **{user.name}** is now chill!",
+                colour = 0x7289da
+            )
+            embed.set_thumbnail(url = user.avatar_url)
+            await ctx.send(embed=embed)
 
     @commands.has_any_role(253619793691803658, 345951762173394954)
     @commands.command(
