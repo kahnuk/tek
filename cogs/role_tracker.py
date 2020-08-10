@@ -1,6 +1,7 @@
 import discord
 import sqlite3
 import asyncio
+from datetime import datetime
 import json
 from sqlite3 import Error
 from discord.ext import tasks, commands
@@ -133,7 +134,6 @@ class role_tracker(commands.Cog):
     @commands.command(
         name = 'role',
         description = "Manages various status roles",
-        aliases = roles
     )
     async def change_role(self, ctx):
         if ctx.invoked_with in json_roles:
@@ -146,6 +146,20 @@ class role_tracker(commands.Cog):
         self.check_member_roles(ctx.guild, ctx.author, role, ctx.channel)
         asyncio.ensure_future(ctx.message.delete())
         
+    @commands.command(
+        name = 'roles',
+        description = "Lists available status roles"
+    )
+    async def roles(self, ctx):
+        embed = discord.Embed(
+            title = "Temporary Effect Roles",
+            description = "``.tripping`` - For any psychedelic (LSD, mushrooms etc.)\n``.stimmed`` - For any stimulant (Cocaine, Adderall etc.)\n``.barred`` - For any benzo (Xanax, Valium etc.)\n``.nodding`` - For any opioid (Oxycodone, heroin etc.)\n``.drunk`` For alcohol\n``.dissod`` - For any dissociative (Ketamine, DXM etc)\n``.rolling`` For any empathogen (MDMA, 6-APB etc)\n``.stoned`` - For cannabis\n``.delirious`` - For any deliriant (DPH, datura etc)\n``.gabaergic`` - For GABAergics other than alcohol/benzos (Phenibut, gabapentin etc)",
+            colour = 0x7289da,
+            timestamp = datetime.utcnow()
+        )
+        embed.set_footer(text = "Please use drugs responsibly")
+        asyncio.ensure_future(ctx.send(embed=embed))
+
 
 def setup(bot):
     bot.add_cog(role_tracker(bot))
