@@ -18,7 +18,7 @@ with open('data/roles/roles.json') as json_file:
     
     role_list = list(json_roles.keys())
     alias_list = list(json_content['aliases'].keys())
-    roles = role_list + alias_list
+    roles_lister = role_list + alias_list
 
 with open('config.json') as json_config:
     json_config_content = json.load(json_config)
@@ -134,6 +134,7 @@ class role_tracker(commands.Cog):
     @commands.command(
         name = 'role',
         description = "Manages various status roles",
+        aliases = role_lister
     )
     async def change_role(self, ctx):
         if ctx.invoked_with in json_roles:
