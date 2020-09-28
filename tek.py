@@ -43,8 +43,6 @@ async def on_command_error(ctx, error):
                 color = 0x7289da
             )
             await ctx.message.channel.send(embed = embed, delete_after=(5))
-            await asyncio.sleep(5)
-            await ctx.message.delete()
             return
 
 
