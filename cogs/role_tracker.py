@@ -46,7 +46,7 @@ class role_tracker(commands.Cog):
             for row in all_rows:
                 try:
                     guild = self.bot.get_guild(row[0])
-                    member = guild.get_member(row[1])
+                    member = await guild.fetch_member(row[1])
                     role = discord.utils.get(guild.roles, id = row[2])
                     self.check_member_roles(guild, member, role)
                 except:
