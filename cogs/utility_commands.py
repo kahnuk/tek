@@ -246,8 +246,9 @@ class utility_commands(commands.Cog):
         #Since reaction.users() can return User objects that don't play nice with server nicknames, fetch the member object from ID and append the display name to the list
         for toker_id in tokers_id_list:
             toker_obj = await ctx.guild.fetch_member(toker_id)
-            tokers.append(str(toker_obj.display_name))
-
+            if not str(toker_obj.display_name) in tokers:
+                tokers.append(str(toker_obj.display_name))
+                
         #Toke up!
         await asyncio.sleep(3)
         formatted_tokers = ', '.join(tokers)
