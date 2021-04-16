@@ -206,15 +206,12 @@ class utility_commands(commands.Cog):
 
             if i == 1:
                 interval = 60
-                print(f"Waiting {interval} seconds")
                 await asyncio.sleep(interval)
             if i == 2:
                 interval = 30
-                print(f"Waiting {interval} seconds")
                 await asyncio.sleep(interval)
             if i == 3:
                 interval = 22
-                print(f"Waiting {interval} seconds")
                 await asyncio.sleep(interval)
 
         #Send the countdown and toke signal
