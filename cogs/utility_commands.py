@@ -186,45 +186,38 @@ class utility_commands(commands.Cog):
         aliases = ['tokeup', 'sesh']
     )
     async def gtoke(self, ctx):
-        emotes = ['<:Weeed:581023462534021120>', '<:weed:255964645561466880>', '<:smoke:478661373417619476>', '<:pepetoke:502604660927102977>', '<:musky:487937634157461505>', '<:joint:585773581980663811>', '<:blunt:585774074094026763>', '<:bongface:456821076387823626>']
-        bot_message = await ctx.channel.send(f"{ctx.author.display_name} has started a group toke - use the reaction to join in! Toke up in: two minutes")
-        emote = random.choice(emotes)
-        reaction_add = await bot_message.add_reaction(emote)
-        cached_message = await ctx.channel.fetch_message(bot_message.id)
-        users = list()
-        users.append(str(ctx.author.display_name))
-        while True:
-            try:
-                reaction, user = await self.bot.wait_for('reaction_add', timeout=60)
-                if str(reaction) == str(emote):
-                    if not str(user.display_name) in users:
-                        users.append(str(user.display_name))
-            except asyncio.TimeoutError:
-                break
-        bot_message = await ctx.channel.send("Group toke commencing in one minute! Use the reaction to join in")
-        emote = random.choice(emotes)
-        reaction_add = await bot_message.add_reaction(emote)
-        cached_message = await ctx.channel.fetch_message(bot_message.id)
-        while True:
-            try:
-                reaction, user = await self.bot.wait_for('reaction_add', timeout=30)
-                if str(reaction) == str(emote):
-                    if not str(user.display_name) in users:
-                        users.append(str(user.display_name))
-            except asyncio.TimeoutError:
-                break
-        bot_message = await ctx.channel.send("Group toke commencing in 30 seconds! Use the reaction to join in")
-        emote = random.choice(emotes)
-        reaction_add = await bot_message.add_reaction(emote)
-        cached_message = await ctx.channel.fetch_message(bot_message.id)
-        while True:
-            try:
-                reaction, user = await self.bot.wait_for('reaction_add', timeout=25)
-                if str(reaction) == str(emote):
-                    if not str(user.display_name) in users:
-                        users.append(str(user.display_name))
-            except asyncio.TimeoutError:
-                break
+        sent_messages = list() #Notifications the bot has sent
+        message_templates = [f"{ctx.author.display_name} has started a group toke - toke up in two minutes! Use the reaction button to join in", "Toke up in: one minute! Use the reaction button to join in", "Toke up in: 30 seconds! Use the reaction button to join in"]
+        emotes = ['<:Weeed:581023462534021120>', '<:weed:255964645561466880>', '<:smoke:478661373417619476>', '<:pepetoke:502604660927102977>', '<:musky:487937634157461505>', '<:joint:585773581980663811>', '<:blunt:585774074094026763>', '<:bongface:456821076387823626>', '<a:bong:585769584888512521>', '<:smonke:777647646684610620>']
+        emote_list = list()
+        tokers = list() #Final list of tokers display names
+        tokers.append(ctx.author.display_name)
+
+        i = 0
+        for message in message_templates:
+            i += 1
+            #For each message in the templates list, send the message and append the message ID to the list
+            sent_message = await ctx.channel.send(message)
+            sent_messages.append(sent_message.id)
+            #Choose an emote to react with and add it to the running list
+            emote = random.choice(emotes)
+            await sent_message.add_reaction(emote)
+            emote_list.append(str(emote))
+
+            if i == 1:
+                interval = 60
+                print(f"Waiting {interval} seconds")
+                await asyncio.sleep(interval)
+            if i == 2:
+                interval = 30
+                print(f"Waiting {interval} seconds")
+                await asyncio.sleep(interval)
+            if i == 3:
+                interval = 22
+                print(f"Waiting {interval} seconds")
+                await asyncio.sleep(interval)
+
+        #Send the countdown and toke signal
         timer = 5
         msg = await ctx.channel.send("5...")
         for i in range(timer):
@@ -234,9 +227,34 @@ class utility_commands(commands.Cog):
                 await msg.edit(content=f'{timer}...')
             else:
                 await msg.edit(content='Toke up!')
+
+        tokers_id_list = list()
+        dice = random.randrange(100)
+        #For each message sent, cache it (required for accurate reaction counts) and count the reactions
+        #This is a bit of a gross block but I couldn't immediately see a nice way to break it up
+        for message in sent_messages:
+            cached_message = await ctx.channel.fetch_message(message)
+            for reaction in cached_message.reactions:
+                #If the reaction is one of the trigger emotes, iterate through the list of users who hit it
+                if str(reaction) in emote_list:
+                    async for user in reaction.users():
+                        if not user.id in tokers_id_list:
+                            #1/100 chance for Tek to get lit ;)
+                            if dice == 69:
+                                tokers_id_list.append(user.id)
+                            else:
+                                if not user.id == 693968173883457536:
+                                    tokers_id_list.append(user.id)
+
+        #Since reaction.users() can return User objects that don't play nice with server nicknames, fetch the member object from ID and append the display name to the list
+        for toker_id in tokers_id_list:
+            toker_obj = await ctx.guild.fetch_member(toker_id)
+            tokers.append(str(toker_obj.display_name))
+
+        #Toke up!
         await asyncio.sleep(3)
-        finished_users = ', '.join(users)
-        await ctx.channel.send(f"{finished_users} toked up! {emote}")
+        formatted_tokers = ', '.join(tokers)
+        await ctx.channel.send(f"{formatted_tokers} toked up! {emote}")
 
 
 
