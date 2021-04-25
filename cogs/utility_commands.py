@@ -190,7 +190,8 @@ class utility_commands(commands.Cog):
         message_templates = [
             f"{ctx.author.display_name} has started a group toke - toke up in two minutes! Use the reaction button to join in",
             "Toke up in: one minute! Use the reaction button to join in",
-            "Toke up in: 30 seconds! Use the reaction button to join in"]
+            "Toke up in: 30 seconds! Use the reaction button to join in"
+        ]
         emotes = [
             '<:Weeed:581023462534021120>', '<:weed:255964645561466880>', '<:smoke:478661373417619476>',
             '<:pepetoke:502604660927102977>', '<:musky:487937634157461505>', '<:joint:585773581980663811>',

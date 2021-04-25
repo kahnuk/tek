@@ -61,8 +61,7 @@ class role_tracker(commands.Cog):
     async def before_check(self):
         await self.bot.wait_until_ready()
 
-    def check_member_roles(self, guild: discord.Guild, member: discord.Member, role: discord.Role,
-                           *channel: discord.TextChannel):
+    def check_member_roles(self, guild: discord.Guild, member: discord.Member, role: discord.Role, *channel: discord.TextChannel):
         if not channel:
             channel = discord.utils.get(guild.text_channels, id = int(json_guilds[str(guild.id)]['bot_channel']))
         else:
@@ -72,8 +71,7 @@ class role_tracker(commands.Cog):
         else:
             self.add_role(guild, member, role, channel)
 
-    def remove_role(self, guild: discord.Guild, member: discord.Member, role: discord.Role,
-                    channel: discord.TextChannel):
+    def remove_role(self, guild: discord.Guild, member: discord.Member, role: discord.Role, channel: discord.TextChannel):
         embed = discord.Embed(colour = 0x7289da)
         embed.add_field(name = '**Roles Updated**', value = f"Role **'{role}'** removed from: {member.mention}",
                         inline = False)
@@ -86,8 +84,7 @@ class role_tracker(commands.Cog):
         duration = int(json_roles[role_name]['expiry'])
         expiry = time.time() + duration * 3600
         embed = discord.Embed(colour = 0x7289da)
-        embed.add_field(name = "**Roles Updated**", value = f"Role **'{role.name}'** added to: {member.mention}",
-                        inline = False)
+        embed.add_field(name = "**Roles Updated**", value = f"Role **'{role.name}'** added to: {member.mention}", inline = False)
         asyncio.ensure_future(channel.send(embed = embed, delete_after = 5))
         asyncio.ensure_future(member.add_roles(role))
         self.sql_execute('insert.sql', guild.id, member.id, role.id, expiry)
