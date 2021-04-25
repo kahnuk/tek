@@ -150,12 +150,12 @@ class role_tracker(commands.Cog):
         embed = discord.Embed(
             title = "Temporary Effect Roles",
             description = "``.tripping`` - For any psychedelic (LSD, mushrooms etc.)\n``.stimmed`` - For any stimulant "
-                        "(Cocaine, Adderall etc.)\n``.barred`` - For any benzo (Xanax, Valium etc.)\n``.nodding`` - "
-                        "For any opioid (Oxycodone, heroin etc.)\n``.drunk`` For alcohol\n``.dissod`` - For any "
-                        "dissociative (Ketamine, DXM etc)\n``.rolling`` For any empathogen (MDMA, "
-                        "6-APB etc)\n``.stoned`` - For cannabis\n``.delirious`` - For any deliriant (DPH, "
-                        "datura etc)\n``.gabaergic`` - For GABAergics other than alcohol/benzos (Phenibut, "
-                        "gabapentin etc)",
+                          "(Cocaine, Adderall etc.)\n``.barred`` - For any benzo (Xanax, Valium etc.)\n``.nodding`` - "
+                          "For any opioid (Oxycodone, heroin etc.)\n``.drunk`` For alcohol\n``.dissod`` - For any "
+                          "dissociative (Ketamine, DXM etc)\n``.rolling`` For any empathogen (MDMA, "
+                          "6-APB etc)\n``.stoned`` - For cannabis\n``.delirious`` - For any deliriant (DPH, "
+                          "datura etc)\n``.gabaergic`` - For GABAergics other than alcohol/benzos (Phenibut, "
+                          "gabapentin etc)",
             colour = 0x7289da,
             timestamp = datetime.utcnow()
         )

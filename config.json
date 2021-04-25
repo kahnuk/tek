@@ -1,15 +1,21 @@
 {
-    "prefix": ".",
-    "description": "Tek",
-    "version": "1.3",
-    "owner_id": "216773835637260289",
-    "cogs": ["cogs.image_commands", "cogs.utility_commands", "cogs.static_embeds", "cogs.role_tracker", "cogs.page_embeds"],
-    "guilds": {
-            "253612214148136981": {
-                "bot_channel": "253642152347697152"
-            },
-            "335167514961248256": {
-                "bot_channel": "335593369130631168"
-            }
+  "prefix": ".",
+  "description": "Tek",
+  "version": "1.3",
+  "owner_id": "216773835637260289",
+  "cogs": [
+    "cogs.image_commands",
+    "cogs.utility_commands",
+    "cogs.static_embeds",
+    "cogs.role_tracker",
+    "cogs.page_embeds"
+  ],
+  "guilds": {
+    "253612214148136981": {
+      "bot_channel": "253642152347697152"
+    },
+    "335167514961248256": {
+      "bot_channel": "335593369130631168"
     }
+  }
 }

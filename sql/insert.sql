@@ -1,1 +1,2 @@
-INSERT INTO role_tracker VALUES(?,?,?,?)
+INSERT INTO role_tracker
+VALUES (?, ?, ?, ?)

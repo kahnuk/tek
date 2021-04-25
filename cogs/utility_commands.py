@@ -140,8 +140,10 @@ class utility_commands(commands.Cog):
                 await new_role.edit(position = range_list[1])
                 await ctx.author.add_roles(new_role)
             else:
-                new_role = await discord.utils.get(ctx.guild.roles, name = ctx.author.name).edit(colour = role_colour,
-                                                                                               position = range_list[1])
+                new_role = await discord.utils \
+                    .get(ctx.guild.roles, name = ctx.author.name) \
+                    .edit(colour = role_colour, position = range_list[1])
+
             embed = discord.Embed(
                 title = "Custom colour applied!",
                 description = f"Applied colour **[{r}, {g}, {b}]** to **{ctx.author.display_name}**!",
