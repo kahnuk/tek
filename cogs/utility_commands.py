@@ -23,8 +23,8 @@ class utility_commands(commands.Cog):
 
     @commands.has_any_role(253619793691803658, 345951762173394954)
     @commands.command(
-        name='verify',
-        description="ID Verification"
+        name = 'verify',
+        description = "ID Verification"
     )
     async def verify(self, ctx, user: discord.Member):
         print(verification_users)
@@ -34,25 +34,25 @@ class utility_commands(commands.Cog):
         for i in user.roles[1:]:
             await user.remove_roles(i)
         if ctx.guild.id == 253612214148136981:
-            verification = discord.utils.get(ctx.guild.roles, id=476377701154947082)
+            verification = discord.utils.get(ctx.guild.roles, id = 476377701154947082)
         else:
-            verification = discord.utils.get(ctx.guild.roles, id=730509216883802244)
+            verification = discord.utils.get(ctx.guild.roles, id = 730509216883802244)
         await user.add_roles(verification)
         embed = discord.Embed(
-            title="Success!",
-            description=f"User **{user.name} [{user.id}]** has been put in verification.",
-            colour=0x7289da
+            title = "Success!",
+            description = f"User **{user.name} [{user.id}]** has been put in verification.",
+            colour = 0x7289da
         )
-        embed.set_thumbnail(url=user.avatar_url)
-        await ctx.send(embed=embed)
+        embed.set_thumbnail(url = user.avatar_url)
+        await ctx.send(embed = embed)
 
     @commands.has_any_role(401512090449215489)
     @commands.command(
-        name='chill',
-        description="Chill toggle"
+        name = 'chill',
+        description = "Chill toggle"
     )
     async def chill(self, ctx, user: discord.Member):
-        chill = discord.utils.get(ctx.guild.roles, id=739272333512147066)
+        chill = discord.utils.get(ctx.guild.roles, id = 739272333512147066)
         user_roles = user.roles[1:]
         if not chill in user.roles:
             if not str(user.id) in chill_users:
@@ -61,34 +61,34 @@ class utility_commands(commands.Cog):
                 await user.remove_roles(i)
             await user.add_roles(chill)
             embed = discord.Embed(
-                title="Success!",
-                description=f"User **{user.name}** has been chilled!",
-                colour=0x7289da
+                title = "Success!",
+                description = f"User **{user.name}** has been chilled!",
+                colour = 0x7289da
             )
-            embed.set_thumbnail(url=user.avatar_url)
-            await ctx.send(embed=embed)
+            embed.set_thumbnail(url = user.avatar_url)
+            await ctx.send(embed = embed)
         else:
             if str(user.id) in chill_users:
                 for i in chill_users[str(user.id)]:
                     await user.add_roles(i)
             await user.remove_roles(chill)
             embed = discord.Embed(
-                title="Success!",
-                description=f"User **{user.name}** is now chill!",
-                colour=0x7289da
+                title = "Success!",
+                description = f"User **{user.name}** is now chill!",
+                colour = 0x7289da
             )
-            embed.set_thumbnail(url=user.avatar_url)
-            await ctx.send(embed=embed)
+            embed.set_thumbnail(url = user.avatar_url)
+            await ctx.send(embed = embed)
 
     @commands.has_any_role(253619793691803658, 345951762173394954)
     @commands.command(
-        name='verified'
+        name = 'verified'
     )
     async def verified(self, ctx, user: discord.Member, *reason: str):
         if ctx.guild.id == 253612214148136981:
-            verification = discord.utils.get(ctx.guild.roles, id=476377701154947082)
+            verification = discord.utils.get(ctx.guild.roles, id = 476377701154947082)
         else:
-            verification = discord.utils.get(ctx.guild.roles, id=730509216883802244)
+            verification = discord.utils.get(ctx.guild.roles, id = 730509216883802244)
         if reason:
             reason_str = ": " + " ".join(reason)
         else:
@@ -98,79 +98,79 @@ class utility_commands(commands.Cog):
                 await user.add_roles(i)
         await user.remove_roles(verification)
         embed = discord.Embed(
-            title="Verified User",
-            description=f"User **{user.name} [{user.id}]** has been verified by **{ctx.author.name}**{reason_str}",
-            colour=0x7289da,
-            timestamp=datetime.utcnow()
+            title = "Verified User",
+            description = f"User **{user.name} [{user.id}]** has been verified by **{ctx.author.name}**{reason_str}",
+            colour = 0x7289da,
+            timestamp = datetime.utcnow()
         )
-        embed.set_thumbnail(url=user.avatar_url)
-        embed.set_footer(text=f"User ID: {user.id}")
+        embed.set_thumbnail(url = user.avatar_url)
+        embed.set_footer(text = f"User ID: {user.id}")
         if ctx.guild.id == 253612214148136981:
-            verified_channel = discord.utils.get(ctx.guild.text_channels, id=int(655009478936363008))
+            verified_channel = discord.utils.get(ctx.guild.text_channels, id = int(655009478936363008))
         else:
-            verified_channel = discord.utils.get(ctx.guild.text_channels, id=int(730512825449185472))
-        await verified_channel.send(embed=embed)
+            verified_channel = discord.utils.get(ctx.guild.text_channels, id = int(730512825449185472))
+        await verified_channel.send(embed = embed)
         success_embed = discord.Embed(
-            title="Success!",
-            description=f"User **{user.name} [{user.id}]** has been successfully verified.",
-            colour=0x7289da
+            title = "Success!",
+            description = f"User **{user.name} [{user.id}]** has been successfully verified.",
+            colour = 0x7289da
         )
-        embed.set_thumbnail(url=user.avatar_url)
-        await ctx.send(embed=success_embed)
+        embed.set_thumbnail(url = user.avatar_url)
+        await ctx.send(embed = success_embed)
 
     @commands.has_any_role(585558166834774047, 585550892091310080, 345951762173394954, 289876378868908042)
     @commands.command(
-        name='colour',
-        aliases=['color']
+        name = 'colour',
+        aliases = ['color']
     )
     async def colour(self, ctx, r: int, g: int, b: int):
         rgb = [r, g, b]
         if ctx.guild.id == 253612214148136981:
-            comedown = discord.utils.get(ctx.guild.roles, name='Comedown')
-            kingpin = discord.utils.get(ctx.guild.roles, name='Kingpin 👾')
+            comedown = discord.utils.get(ctx.guild.roles, name = 'Comedown')
+            kingpin = discord.utils.get(ctx.guild.roles, name = 'Kingpin 👾')
             range_list = list(range(kingpin.position, comedown.position))
         else:
-            baked = discord.utils.get(ctx.guild.roles, name='Baked')
-            nitro = discord.utils.get(ctx.guild.roles, name='Nitro Boosters')
+            baked = discord.utils.get(ctx.guild.roles, name = 'Baked')
+            nitro = discord.utils.get(ctx.guild.roles, name = 'Nitro Boosters')
             range_list = list(range(nitro.position, baked.position))
         if all(0 <= i <= 255 for i in rgb):
             role_colour = discord.Colour.from_rgb(r, g, b)
-            if not discord.utils.get(ctx.guild.roles, name=ctx.author.name):
-                new_role = await ctx.guild.create_role(name=ctx.author.name, colour=role_colour)
-                await new_role.edit(position=range_list[1])
+            if not discord.utils.get(ctx.guild.roles, name = ctx.author.name):
+                new_role = await ctx.guild.create_role(name = ctx.author.name, colour = role_colour)
+                await new_role.edit(position = range_list[1])
                 await ctx.author.add_roles(new_role)
             else:
-                new_role = await discord.utils.get(ctx.guild.roles, name=ctx.author.name).edit(colour=role_colour,
-                                                                                               position=range_list[1])
+                new_role = await discord.utils.get(ctx.guild.roles, name = ctx.author.name).edit(colour = role_colour,
+                                                                                               position = range_list[1])
             embed = discord.Embed(
-                title="Custom colour applied!",
-                description=f"Applied colour **[{r}, {g}, {b}]** to **{ctx.author.display_name}**!",
-                colour=role_colour
+                title = "Custom colour applied!",
+                description = f"Applied colour **[{r}, {g}, {b}]** to **{ctx.author.display_name}**!",
+                colour = role_colour
             )
-            await ctx.channel.send(embed=embed)
+            await ctx.channel.send(embed = embed)
         else:
             await ctx.channel.send('**Error:** That is not a valid RGB colour code!')
 
     @commands.command(
-        name='clearcolour',
-        aliases=['clearcolor']
+        name = 'clearcolour',
+        aliases = ['clearcolor']
     )
     async def clearcolour(self, ctx):
-        colour_role = discord.utils.get(ctx.guild.roles, name=ctx.author.name)
+        colour_role = discord.utils.get(ctx.guild.roles, name = ctx.author.name)
         if colour_role:
             await colour_role.delete()
             await ctx.channel.send(f"Custom role for {ctx.author.display_name} deleted.")
 
     @commands.has_any_role(401512090449215489, 723896600086315079, 339896504447795210, 335169145039486976)
     @commands.command(
-        name='triptoggle',
-        aliases=['toggletrip']
+        name = 'triptoggle',
+        aliases = ['toggletrip']
     )
     async def triptoggle(self, ctx, member: discord.Member):
         if ctx.guild.id == 335167514961248256:
-            trip_role = discord.utils.get(ctx.guild.roles, id=455415325018685451)
+            trip_role = discord.utils.get(ctx.guild.roles, id = 455415325018685451)
         else:
-            trip_role = discord.utils.get(ctx.guild.roles, id=273134198498394112)
+            trip_role = discord.utils.get(ctx.guild.roles, id = 273134198498394112)
         if trip_role in member.roles:
             await member.remove_roles(trip_role)
             await ctx.channel.send(f"The tripping role has been taken off {member.display_name}.")
@@ -179,9 +179,9 @@ class utility_commands(commands.Cog):
             await ctx.channel.send(f"{member.display_name} has been given the tripping role.")
 
     @commands.command(
-        name='gtoke',
-        description="Starts a group toke",
-        aliases=['tokeup', 'sesh']
+        name = 'gtoke',
+        description = "Starts a group toke",
+        aliases = ['tokeup', 'sesh']
     )
     async def gtoke(self, ctx):
         sent_messages = list()  # Notifications the bot has sent
@@ -227,9 +227,9 @@ class utility_commands(commands.Cog):
             timer = timer - 1
             await asyncio.sleep(1)
             if not timer == 0:
-                await msg.edit(content=f'{timer}...')
+                await msg.edit(content = f'{timer}...')
             else:
-                await msg.edit(content='Toke up!')
+                await msg.edit(content = 'Toke up!')
 
         tokers_id_list = list()
         dice = random.randrange(100)

@@ -50,28 +50,28 @@ class page_embeds(commands.Cog):
             for idx, page in enumerate(data['pages']):
                 page_num = idx + 1
                 embed = discord.Embed(
-                    title=page[0],
-                    description=page[1],
-                    colour=0x7289da,
-                    timestamp=datetime.utcnow()
+                    title = page[0],
+                    description = page[1],
+                    colour = 0x7289da,
+                    timestamp = datetime.utcnow()
                 )
-                embed.set_author(name=data['title'])
+                embed.set_author(name = data['title'])
 
                 if 'footer' in data:
-                    embed.set_footer(text=f"{page_num}/{len(data['pages'])} {data['footer']}")
+                    embed.set_footer(text = f"{page_num}/{len(data['pages'])} {data['footer']}")
                 else:
-                    embed.set_footer(text=f"{page_num}/{len(data['pages'])}  Please use drugs responsibly")
+                    embed.set_footer(text = f"{page_num}/{len(data['pages'])}  Please use drugs responsibly")
                 if 'image' in data:
-                    embed.set_image(url=data['image'])
+                    embed.set_image(url = data['image'])
                 if 'thumbnail' in data:
-                    embed.set_thumbnail(url=data['thumbnail'])
+                    embed.set_thumbnail(url = data['thumbnail'])
 
                 pages.append(embed)
             return pages
 
         # Send the first embed and add the reaction buttons
         async def setup(self):
-            self.msg = await self.channel.send(embed=self.pages[0])
+            self.msg = await self.channel.send(embed = self.pages[0])
             if len(self.pages) == 1:
                 return
 
@@ -80,7 +80,7 @@ class page_embeds(commands.Cog):
 
         # Change to defined page
         async def alter(self, page: int):
-            await self.msg.edit(embed=self.pages[page])
+            await self.msg.edit(embed = self.pages[page])
 
         # Jump to first page
         async def first_page(self):
@@ -137,7 +137,7 @@ class page_embeds(commands.Cog):
 
                 # Wait for reactions that fit the criteria in check for 120 seconds
                 try:
-                    reaction, user = await self.bot.wait_for('reaction_add', check=self.check, timeout=120)
+                    reaction, user = await self.bot.wait_for('reaction_add', check = self.check, timeout = 120)
                 except asyncio.TimeoutError:
                     return await self.stop()
 
@@ -151,75 +151,75 @@ class page_embeds(commands.Cog):
                 await self.execute()
 
     @commands.command(
-        name='mdma',
-        description="MDMA harm reduction information",
-        aliases=commands_data['mdma']['aliases']
+        name = 'mdma',
+        description = "MDMA harm reduction information",
+        aliases = commands_data['mdma']['aliases']
     )
     async def mdma(self, ctx):
         pages = self.paginator(ctx, 'mdma')
         await pages.paginate()
 
     @commands.command(
-        name='reagents',
-        description="Test kit vendors & use instructions",
-        aliases=commands_data['reagents']['aliases']
+        name = 'reagents',
+        description = "Test kit vendors & use instructions",
+        aliases = commands_data['reagents']['aliases']
     )
     async def reagents(self, ctx):
         pages = self.paginator(ctx, 'reagents')
         await pages.paginate()
 
     @commands.command(
-        name='prep',
-        description="First trip preparation guide",
-        aliases=commands_data['prep']['aliases']
+        name = 'prep',
+        description = "First trip preparation guide",
+        aliases = commands_data['prep']['aliases']
     )
     async def prep(self, ctx):
         pages = self.paginator(ctx, 'prep')
         await pages.paginate()
 
     @commands.command(
-        name='scales',
-        description="Scale vendors & information",
-        aliases=commands_data['scales']['aliases']
+        name = 'scales',
+        description = "Scale vendors & information",
+        aliases = commands_data['scales']['aliases']
     )
     async def scales(self, ctx):
         pages = self.paginator(ctx, 'scales')
         await pages.paginate()
 
     @commands.command(
-        name='mdmasupps',
-        description="Information on MDMA & supplements"
+        name = 'mdmasupps',
+        description = "Information on MDMA & supplements"
     )
     async def mdmasupps(self, ctx):
         pages = self.paginator(ctx, 'mdmasupps')
         await pages.paginate()
 
     @commands.command(
-        name='magnesium',
-        description="Information on magnesium"
+        name = 'magnesium',
+        description = "Information on magnesium"
     )
     async def magnesium(self, ctx):
         pages = self.paginator(ctx, 'magnesium')
         await pages.paginate()
 
     @commands.command(
-        name='help',
-        description='Help command'
+        name = 'help',
+        description = 'Help command'
     )
     async def help(self, ctx):
         pages = self.paginator(ctx, 'help')
         await pages.paginate()
 
     @commands.command(
-        name='apod',
-        description="NASA Astronomy Picture of the Day"
+        name = 'apod',
+        description = "NASA Astronomy Picture of the Day"
     )
     async def apod(self, ctx, *date):
         async with aiohttp.ClientSession() as session:
             if date:
-                url = f"https://api.nasa.gov/planetary/apod?api_key={self.json_config['apod_key']}&date={date[0]}"
+                url = f"https://api.nasa.gov/planetary/apod?api_key = {self.json_config['apod_key']}&date = {date[0]}"
             else:
-                url = f"https://api.nasa.gov/planetary/apod?api_key={self.json_config['apod_key']}"
+                url = f"https://api.nasa.gov/planetary/apod?api_key = {self.json_config['apod_key']}"
 
             async with session.get(url) as r:
                 if r.status == 200:
@@ -229,50 +229,50 @@ class page_embeds(commands.Cog):
 
         if data['media_type'] == 'image':
             page_one = discord.Embed(
-                title=data['title'],
-                colour=0x7289da,
-                timestamp=datetime.utcnow()
+                title = data['title'],
+                colour = 0x7289da,
+                timestamp = datetime.utcnow()
             )
-            page_one.set_author(name=f"NASA Astronomy Picture of the Day - {data['date']}")
-            page_one.set_image(url=data['url'])
+            page_one.set_author(name = f"NASA Astronomy Picture of the Day - {data['date']}")
+            page_one.set_image(url = data['url'])
             if 'copyright' in data:
-                page_one.set_footer(text=f"© {data['copyright']}")
+                page_one.set_footer(text = f"© {data['copyright']}")
             pages.append(page_one)
 
             page_two = discord.Embed(
-                title=data['title'],
-                colour=0x7289da,
-                description=data['explanation'],
-                timestamp=datetime.utcnow()
+                title = data['title'],
+                colour = 0x7289da,
+                description = data['explanation'],
+                timestamp = datetime.utcnow()
             )
-            page_two.set_author(name=f"NASA Astronomy Picture of the Day - {data['date']}")
+            page_two.set_author(name = f"NASA Astronomy Picture of the Day - {data['date']}")
             if 'copyright' in data:
-                page_two.set_footer(text=f"© {data['copyright']}")
+                page_two.set_footer(text = f"© {data['copyright']}")
             pages.append(page_two)
 
         if data['media_type'] == 'video':
             page_one = discord.Embed(
-                title=data['title'],
-                colour=0x7289da,
-                description=f"Video URL: {data['url']}",
-                timestamp=datetime.utcnow()
+                title = data['title'],
+                colour = 0x7289da,
+                description = f"Video URL: {data['url']}",
+                timestamp = datetime.utcnow()
             )
 
-            page_one.set_author(name=f"NASA Astronomy Video of the Day - {data['date']}")
+            page_one.set_author(name = f"NASA Astronomy Video of the Day - {data['date']}")
             if 'copyright' in data:
-                page_one.set_footer(text=f"© {data['copyright']}")
+                page_one.set_footer(text = f"© {data['copyright']}")
             pages.append(page_one)
 
             page_two = discord.Embed(
-                title=data['title'],
-                colour=0x7289da,
-                description=data['explanation'],
-                timestamp=datetime.utcnow()
+                title = data['title'],
+                colour = 0x7289da,
+                description = data['explanation'],
+                timestamp = datetime.utcnow()
             )
 
-            page_two.set_author(name=f"NASA Astronomy Video of the Day - {data['date']}")
+            page_two.set_author(name = f"NASA Astronomy Video of the Day - {data['date']}")
             if 'copyright' in data:
-                page_two.set_footer(text=f"© {data['copyright']}")
+                page_two.set_footer(text = f"© {data['copyright']}")
             pages.append(page_two)
 
         paginator = self.paginator(ctx, 'apod', pages)

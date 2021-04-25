@@ -40,7 +40,7 @@ class role_tracker(commands.Cog):
         self.sql_execute('create_table.sql')
         self.check_role_table.start()
 
-    @tasks.loop(seconds=60.0)
+    @tasks.loop(seconds = 60.0)
     # Check the role table every 60 seconds for entries where the timestamp has passed and pass them to func
     # role_toggle, then clear the entry
     async def check_role_table(self):
@@ -51,7 +51,7 @@ class role_tracker(commands.Cog):
                 try:
                     guild = self.bot.get_guild(row[0])
                     member = await guild.fetch_member(row[1])
-                    role = discord.utils.get(guild.roles, id=row[2])
+                    role = discord.utils.get(guild.roles, id = row[2])
                     self.check_member_roles(guild, member, role)
                 except:
                     print('Member ' + str(row[1]) + ' does not exist.')
@@ -64,7 +64,7 @@ class role_tracker(commands.Cog):
     def check_member_roles(self, guild: discord.Guild, member: discord.Member, role: discord.Role,
                            *channel: discord.TextChannel):
         if not channel:
-            channel = discord.utils.get(guild.text_channels, id=int(json_guilds[str(guild.id)]['bot_channel']))
+            channel = discord.utils.get(guild.text_channels, id = int(json_guilds[str(guild.id)]['bot_channel']))
         else:
             channel = channel[0]
         if role in member.roles:
@@ -74,10 +74,10 @@ class role_tracker(commands.Cog):
 
     def remove_role(self, guild: discord.Guild, member: discord.Member, role: discord.Role,
                     channel: discord.TextChannel):
-        embed = discord.Embed(colour=0x7289da)
-        embed.add_field(name='**Roles Updated**', value=f"Role **'{role}'** removed from: {member.mention}",
-                        inline=False)
-        asyncio.ensure_future(channel.send(embed=embed, delete_after=5))
+        embed = discord.Embed(colour = 0x7289da)
+        embed.add_field(name = '**Roles Updated**', value = f"Role **'{role}'** removed from: {member.mention}",
+                        inline = False)
+        asyncio.ensure_future(channel.send(embed = embed, delete_after = 5))
         asyncio.ensure_future(member.remove_roles(role))
         self.sql_execute('delete.sql', guild.id, member.id, role.id)
 
@@ -85,10 +85,10 @@ class role_tracker(commands.Cog):
         role_name = str(role.name).casefold()
         duration = int(json_roles[role_name]['expiry'])
         expiry = time.time() + duration * 3600
-        embed = discord.Embed(colour=0x7289da)
-        embed.add_field(name="**Roles Updated**", value=f"Role **'{role.name}'** added to: {member.mention}",
-                        inline=False)
-        asyncio.ensure_future(channel.send(embed=embed, delete_after=5))
+        embed = discord.Embed(colour = 0x7289da)
+        embed.add_field(name = "**Roles Updated**", value = f"Role **'{role.name}'** added to: {member.mention}",
+                        inline = False)
+        asyncio.ensure_future(channel.send(embed = embed, delete_after = 5))
         asyncio.ensure_future(member.add_roles(role))
         self.sql_execute('insert.sql', guild.id, member.id, role.id, expiry)
 
@@ -119,8 +119,7 @@ class role_tracker(commands.Cog):
             role_name = str(role.name).casefold()
             duration = int(json_roles[role_name]['expiry']) * 3600
             expiry = time.time() + duration
-            cursor.execute("SELECT * FROM role_tracker where guild=? AND member=? AND role=?",
-                           (guild.id, member.id, role.id))
+            cursor.execute("SELECT * FROM role_tracker where guild=? AND member=? AND role=?", (guild.id, member.id, role.id))
             data = cursor.fetchall()
             if not data:
                 self.sql_execute('insert.sql', guild.id, member.id, role.id, expiry)
@@ -128,9 +127,9 @@ class role_tracker(commands.Cog):
             self.sql_execute('delete.sql', guild.id, member.id, role.id)
 
     @commands.command(
-        name='role',
-        description="Manages various status roles",
-        aliases=roles
+        name = 'role',
+        description = "Manages various status roles",
+        aliases = roles
     )
     async def change_role(self, ctx):
         if ctx.invoked_with in json_roles:
@@ -139,29 +138,29 @@ class role_tracker(commands.Cog):
             role_name = json_content['aliases'][ctx.invoked_with]
         if ctx.invoked_with == 'gabaergic':
             role_name = 'GABAergic'
-        role = discord.utils.get(ctx.guild.roles, name=role_name)
+        role = discord.utils.get(ctx.guild.roles, name = role_name)
         self.check_member_roles(ctx.guild, ctx.author, role, ctx.channel)
         asyncio.ensure_future(ctx.message.delete())
 
     @commands.command(
-        name='roles',
-        description="Lists available status roles"
+        name = 'roles',
+        description = "Lists available status roles"
     )
     async def roles(self, ctx):
         embed = discord.Embed(
-            title="Temporary Effect Roles",
-            description="``.tripping`` - For any psychedelic (LSD, mushrooms etc.)\n``.stimmed`` - For any stimulant "
+            title = "Temporary Effect Roles",
+            description = "``.tripping`` - For any psychedelic (LSD, mushrooms etc.)\n``.stimmed`` - For any stimulant "
                         "(Cocaine, Adderall etc.)\n``.barred`` - For any benzo (Xanax, Valium etc.)\n``.nodding`` - "
                         "For any opioid (Oxycodone, heroin etc.)\n``.drunk`` For alcohol\n``.dissod`` - For any "
                         "dissociative (Ketamine, DXM etc)\n``.rolling`` For any empathogen (MDMA, "
                         "6-APB etc)\n``.stoned`` - For cannabis\n``.delirious`` - For any deliriant (DPH, "
                         "datura etc)\n``.gabaergic`` - For GABAergics other than alcohol/benzos (Phenibut, "
                         "gabapentin etc)",
-            colour=0x7289da,
-            timestamp=datetime.utcnow()
+            colour = 0x7289da,
+            timestamp = datetime.utcnow()
         )
-        embed.set_footer(text="Please use drugs responsibly")
-        asyncio.ensure_future(ctx.send(embed=embed))
+        embed.set_footer(text = "Please use drugs responsibly")
+        asyncio.ensure_future(ctx.send(embed = embed))
 
 
 def setup(bot):
