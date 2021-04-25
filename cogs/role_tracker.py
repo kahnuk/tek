@@ -73,8 +73,7 @@ class role_tracker(commands.Cog):
 
     def remove_role(self, guild: discord.Guild, member: discord.Member, role: discord.Role, channel: discord.TextChannel):
         embed = discord.Embed(colour = 0x7289da)
-        embed.add_field(name = '**Roles Updated**', value = f"Role **'{role}'** removed from: {member.mention}",
-                        inline = False)
+        embed.add_field(name = '**Roles Updated**', value = f"Role **'{role}'** removed from: {member.mention}", inline = False)
         asyncio.ensure_future(channel.send(embed = embed, delete_after = 5))
         asyncio.ensure_future(member.remove_roles(role))
         self.sql_execute('delete.sql', guild.id, member.id, role.id)
