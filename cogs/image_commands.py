@@ -1,11 +1,9 @@
-import discord
 import json
-import asyncio
 import os
 import random
-from datetime import datetime
-from discord.ext import commands
 
+import discord
+from discord.ext import commands
 
 commands_data = {}
 
@@ -15,23 +13,19 @@ for filename in os.listdir('data/image_commands'):
             json_content = json.load(json_file)
             commands_data[filename[:-5]] = json_content
 
+
 class image_commands(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
 
-
-
     @commands.command(
         name = 'testmdma',
         description = "Detailed guide to reagent testing MDMA",
-        aliases = commands_data['testmdma']['aliases']    
-        )
+        aliases = commands_data['testmdma']['aliases']
+    )
     async def testmdma(self, ctx):
         await ctx.send(file = discord.File(commands_data['testmdma']['image']))
-
-    
-
 
     @commands.command(
         name = 'testcoke',
@@ -41,9 +35,6 @@ class image_commands(commands.Cog):
     async def testcoke(self, ctx):
         await ctx.send(file = discord.File(commands_data['testcoke']['image']))
 
-    
-
-
     @commands.command(
         name = 'testlsd',
         description = "Detailed guide to reagent testing LSD",
@@ -51,9 +42,6 @@ class image_commands(commands.Cog):
     )
     async def testlsd(self, ctx):
         await ctx.send(file = discord.File(commands_data['testlsd']['image']))
-
-
-
 
     @commands.command(
         name = 'fent',
@@ -63,18 +51,12 @@ class image_commands(commands.Cog):
     async def fent(self, ctx):
         await ctx.send(file = discord.File(commands_data['fent']['image']))
 
-
-
-
     @commands.command(
         name = 'breathe',
         description = "Breathing gifs"
     )
     async def breathe(self, ctx):
         await ctx.send(file = discord.File(random.choice(commands_data['breathe']['image'])))
-
-    
-
 
     @commands.command(
         name = 'recovery',
@@ -83,8 +65,6 @@ class image_commands(commands.Cog):
     )
     async def recovery(self, ctx):
         await ctx.send(file = discord.File(commands_data['recovery']['image']))
-
-
 
     @commands.command(
         name = 'combochart',

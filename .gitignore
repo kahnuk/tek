@@ -1,0 +1,12 @@
+# IDE specific configuration
+.idea/
+
+# Discord bot token
+auth.json
+
+# SQL databases
+db/
+
+# Temporary caches
+cogs/__pycache__/
+

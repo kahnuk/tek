@@ -1,15 +1,19 @@
-import discord
-import json
 import asyncio
+import json
 import os
 import random
 from datetime import datetime
+
+import discord
 from discord.ext import commands
 
+
 def is_in_guild(guild_id):
-        async def predicate(ctx):
-            return ctx.guild and ctx.guild.id == guild_id
-        return commands.check(predicate)
+    async def predicate(ctx):
+        return ctx.guild and ctx.guild.id == guild_id
+
+    return commands.check(predicate)
+
 
 commands_data = {}
 
@@ -18,6 +22,7 @@ for filename in os.listdir('data/static_embeds'):
         with open('data/static_embeds/' + filename) as json_file:
             json_content = json.load(json_file)
             commands_data[filename[:-5]] = json_content
+
 
 class static_embeds(commands.Cog):
 
@@ -28,10 +33,10 @@ class static_embeds(commands.Cog):
         data = commands_data[command]
         if 'description' in data:
             embed = discord.Embed(
-                    title = data['title'],
-                    description = data['description'],
-                    colour = 0x7289da,
-                    timestamp = datetime.utcnow()
+                title = data['title'],
+                description = data['description'],
+                colour = 0x7289da,
+                timestamp = datetime.utcnow()
             )
         else:
             embed = discord.Embed(
@@ -51,16 +56,15 @@ class static_embeds(commands.Cog):
                 embed.set_footer(text = data['footer'])
         else:
             embed.set_footer(text = "Please use drugs responsibly")
-            
+
         if 'image' in data:
             embed.set_image(url = data['image'])
-        
+
         if 'thumbnail' in data:
             embed.set_thumbnail(url = data['thumbnail'])
 
         asyncio.ensure_future(channel.send(embed = embed))
         return embed
-
 
     @commands.command(
         name = 'badtrip',
@@ -69,15 +73,12 @@ class static_embeds(commands.Cog):
     async def badtrip(self, ctx):
         self.embed('badtrip', ctx.channel)
 
-
     @commands.command(
         name = 'resources',
         description = "List of various harm reduction related websites"
     )
     async def resources(self, ctx):
         self.embed('resources', ctx.channel)
-
-
 
     @commands.command(
         name = 'supps',
@@ -87,16 +88,12 @@ class static_embeds(commands.Cog):
     async def supps(self, ctx):
         self.embed('supps', ctx.channel)
 
-    
-
     @commands.command(
         name = 'ala',
         description = "Information about alpha-lipoic acid"
     )
     async def ala(self, ctx):
         self.embed('ala', ctx.channel)
-
-
 
     @commands.command(
         name = 'alcar',
@@ -105,16 +102,12 @@ class static_embeds(commands.Cog):
     async def alcar(self, ctx):
         self.embed('alcar', ctx.channel)
 
-
-
     @commands.command(
         name = 'vitc',
         description = "Information about vitamin C"
     )
     async def vitc(self, ctx):
         self.embed('vitc', ctx.channel)
-
-
 
     @commands.command(
         name = 'hydration',
@@ -123,16 +116,12 @@ class static_embeds(commands.Cog):
     async def hydration(self, ctx):
         self.embed('hydration', ctx.channel)
 
-
-
     @commands.command(
         name = 'ginger',
         description = "Information about ginger"
     )
     async def ginger(self, ctx):
         self.embed('ginger', ctx.channel)
-
-
 
     @commands.command(
         name = '5htp',
@@ -142,16 +131,12 @@ class static_embeds(commands.Cog):
     async def htp(self, ctx):
         self.embed('5htp', ctx.channel)
 
-
-
     @commands.command(
         name = 'about',
         description = "About the bot"
     )
     async def about(self, ctx):
         self.embed('about', ctx.channel)
-
-
 
     @commands.command(
         name = 'triptoy',
@@ -164,8 +149,6 @@ class static_embeds(commands.Cog):
             description = random.choice(commands_data['triptoy']['toys'])
         )
         asyncio.ensure_future(ctx.channel.send(embed = embed))
-    
-
 
     @commands.command(
         name = 'ping',
@@ -181,8 +164,6 @@ class static_embeds(commands.Cog):
         embed.set_footer(text = "Not client ping")
         asyncio.ensure_future(ctx.channel.send(embed = embed))
 
-
-
     @commands.command(
         name = 'neurotoxic',
         description = "Example of MDMA induced neurotoxicity",
@@ -191,7 +172,6 @@ class static_embeds(commands.Cog):
     async def neurotoxic(self, ctx):
         self.embed('neurotoxic', ctx.channel)
 
-
     @commands.command(
         name = 'rule',
         description = "Prints rules"
@@ -199,7 +179,6 @@ class static_embeds(commands.Cog):
     async def rule(self, ctx, rule):
         rulename = 'rule' + rule
         self.embed(rulename, ctx.channel)
-
 
     @is_in_guild(253612214148136981)
     @commands.command(
@@ -210,7 +189,6 @@ class static_embeds(commands.Cog):
     async def rule1(self, ctx):
         self.embed('rule1', ctx.channel)
 
-
     @is_in_guild(253612214148136981)
     @commands.command(
         name = 'rule2',
@@ -220,7 +198,6 @@ class static_embeds(commands.Cog):
     async def rule2(self, ctx):
         self.embed('rule2', ctx.channel)
 
-
     @is_in_guild(253612214148136981)
     @commands.command(
         name = 'rule3',
@@ -229,7 +206,6 @@ class static_embeds(commands.Cog):
     )
     async def rule3(self, ctx):
         self.embed('rule3', ctx.channel)
-
 
     @is_in_guild(253612214148136981)
     @commands.command(
@@ -249,7 +225,6 @@ class static_embeds(commands.Cog):
     async def rule5(self, ctx):
         self.embed('rule5', ctx.channel)
 
-
     @is_in_guild(253612214148136981)
     @commands.command(
         name = 'rule6',
@@ -258,7 +233,6 @@ class static_embeds(commands.Cog):
     )
     async def rule6(self, ctx):
         self.embed('rule6', ctx.channel)
-
 
     @is_in_guild(253612214148136981)
     @commands.command(
@@ -270,6 +244,5 @@ class static_embeds(commands.Cog):
         self.embed('rule7', ctx.channel)
 
 
-        
 def setup(bot):
     bot.add_cog(static_embeds(bot))

@@ -1,22 +1,23 @@
-import discord
-import json
 import asyncio
-import os
 import random
 from datetime import datetime
-from discord.ext import tasks, commands
+
+import discord
+from discord.ext import commands
 
 verification_users = {}
 chill_users = {}
 
+
 def is_in_guild(guild_id):
-        async def predicate(ctx):
-            return ctx.guild and ctx.guild.id == guild_id
-        return commands.check(predicate)
+    async def predicate(ctx):
+        return ctx.guild and ctx.guild.id == guild_id
+
+    return commands.check(predicate)
 
 
 class utility_commands(commands.Cog):
-    
+
     def __init__(self, bot):
         self.bot = bot
 
@@ -77,7 +78,7 @@ class utility_commands(commands.Cog):
                 colour = 0x7289da
             )
             embed.set_thumbnail(url = user.avatar_url)
-            await ctx.send(embed=embed)
+            await ctx.send(embed = embed)
 
     @commands.has_any_role(253619793691803658, 345951762173394954)
     @commands.command(
@@ -117,8 +118,6 @@ class utility_commands(commands.Cog):
         embed.set_thumbnail(url = user.avatar_url)
         await ctx.send(embed = success_embed)
 
-
-    
     @commands.has_any_role(585558166834774047, 585550892091310080, 345951762173394954, 289876378868908042)
     @commands.command(
         name = 'colour',
@@ -141,7 +140,10 @@ class utility_commands(commands.Cog):
                 await new_role.edit(position = range_list[1])
                 await ctx.author.add_roles(new_role)
             else:
-                new_role = await discord.utils.get(ctx.guild.roles, name = ctx.author.name).edit(colour = role_colour, position = range_list[1])
+                new_role = await discord.utils \
+                    .get(ctx.guild.roles, name = ctx.author.name) \
+                    .edit(colour = role_colour, position = range_list[1])
+
             embed = discord.Embed(
                 title = "Custom colour applied!",
                 description = f"Applied colour **[{r}, {g}, {b}]** to **{ctx.author.display_name}**!",
@@ -160,8 +162,6 @@ class utility_commands(commands.Cog):
         if colour_role:
             await colour_role.delete()
             await ctx.channel.send(f"Custom role for {ctx.author.display_name} deleted.")
-
-
 
     @commands.has_any_role(401512090449215489, 723896600086315079, 339896504447795210, 335169145039486976)
     @commands.command(
@@ -186,20 +186,29 @@ class utility_commands(commands.Cog):
         aliases = ['tokeup', 'sesh']
     )
     async def gtoke(self, ctx):
-        sent_messages = list() #Notifications the bot has sent
-        message_templates = [f"{ctx.author.display_name} has started a group toke - toke up in two minutes! Use the reaction button to join in", "Toke up in: one minute! Use the reaction button to join in", "Toke up in: 30 seconds! Use the reaction button to join in"]
-        emotes = ['<:Weeed:581023462534021120>', '<:weed:255964645561466880>', '<:smoke:478661373417619476>', '<:pepetoke:502604660927102977>', '<:musky:487937634157461505>', '<:joint:585773581980663811>', '<:blunt:585774074094026763>', '<:bongface:456821076387823626>', '<a:bong:585769584888512521>', '<:smonke:777647646684610620>']
+        sent_messages = list()  # Notifications the bot has sent
+        message_templates = [
+            f"{ctx.author.display_name} has started a group toke - toke up in two minutes! Use the reaction button to join in",
+            "Toke up in: one minute! Use the reaction button to join in",
+            "Toke up in: 30 seconds! Use the reaction button to join in"
+        ]
+        emotes = [
+            '<:Weeed:581023462534021120>', '<:weed:255964645561466880>', '<:smoke:478661373417619476>',
+            '<:pepetoke:502604660927102977>', '<:musky:487937634157461505>', '<:joint:585773581980663811>',
+            '<:blunt:585774074094026763>', '<:bongface:456821076387823626>', '<a:bong:585769584888512521>',
+            '<:smonke:777647646684610620>'
+        ]
         emote_list = list()
-        tokers = list() #Final list of tokers display names
+        tokers = list()  # Final list of tokers display names
         tokers.append(ctx.author.display_name)
 
         i = 0
         for message in message_templates:
             i += 1
-            #For each message in the templates list, send the message and append the message ID to the list
+            # For each message in the templates list, send the message and append the message ID to the list
             sent_message = await ctx.channel.send(message)
             sent_messages.append(sent_message.id)
-            #Choose an emote to react with and add it to the running list
+            # Choose an emote to react with and add it to the running list
             emote = random.choice(emotes)
             await sent_message.add_reaction(emote)
             emote_list.append(str(emote))
@@ -214,46 +223,46 @@ class utility_commands(commands.Cog):
                 interval = 22
                 await asyncio.sleep(interval)
 
-        #Send the countdown and toke signal
+        # Send the countdown and toke signal
         timer = 5
         msg = await ctx.channel.send("5...")
         for i in range(timer):
             timer = timer - 1
             await asyncio.sleep(1)
             if not timer == 0:
-                await msg.edit(content=f'{timer}...')
+                await msg.edit(content = f'{timer}...')
             else:
-                await msg.edit(content='Toke up!')
+                await msg.edit(content = 'Toke up!')
 
         tokers_id_list = list()
         dice = random.randrange(100)
-        #For each message sent, cache it (required for accurate reaction counts) and count the reactions
-        #This is a bit of a gross block but I couldn't immediately see a nice way to break it up
+        # For each message sent, cache it (required for accurate reaction counts) and count the reactions
+        # This is a bit of a gross block but I couldn't immediately see a nice way to break it up
         for message in sent_messages:
             cached_message = await ctx.channel.fetch_message(message)
             for reaction in cached_message.reactions:
-                #If the reaction is one of the trigger emotes, iterate through the list of users who hit it
+                # If the reaction is one of the trigger emotes, iterate through the list of users who hit it
                 if str(reaction) in emote_list:
                     async for user in reaction.users():
                         if not user.id in tokers_id_list:
-                            #1/100 chance for Tek to get lit ;)
+                            # 1/100 chance for Tek to get lit ;)
                             if dice == 69:
                                 tokers_id_list.append(user.id)
                             else:
                                 if not user.id == 693968173883457536:
                                     tokers_id_list.append(user.id)
 
-        #Since reaction.users() can return User objects that don't play nice with server nicknames, fetch the member object from ID and append the display name to the list
+        # Since reaction.users() can return User objects that don't play nice with server nicknames, fetch the member
+        # object from ID and append the display name to the list
         for toker_id in tokers_id_list:
             toker_obj = await ctx.guild.fetch_member(toker_id)
             if not str(toker_obj.display_name) in tokers:
                 tokers.append(str(toker_obj.display_name))
-                
-        #Toke up!
+
+        # Toke up!
         await asyncio.sleep(3)
         formatted_tokers = ', '.join(tokers)
         await ctx.channel.send(f"{formatted_tokers} toked up! {emote}")
-
 
 
 def setup(bot):

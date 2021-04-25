@@ -1,1 +1,3 @@
-SELECT * FROM role_tracker WHERE timestamp < strftime('%s', 'now');
+SELECT *
+FROM role_tracker
+WHERE timestamp < strftime('%s', 'now');
