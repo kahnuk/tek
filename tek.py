@@ -7,6 +7,9 @@ from discord.ext import commands
 with open('config.json', 'r') as readable:
     json_content = json.loads(readable.read())
 
+with open('auth.json', 'r') as readable:
+    auth_content = json.loads(readable.read())
+
 bot = commands.Bot(
     command_prefix=json_content['prefix'],
     description=json_content['description'] + json_content['version'],
@@ -45,4 +48,4 @@ async def on_command_error(ctx, error):
             return
 
 
-bot.run(json_content['key'])
+bot.run(auth_content['token'])
