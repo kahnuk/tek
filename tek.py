@@ -29,7 +29,7 @@ async def on_ready():
     for cog in json_content['cogs']:
         bot.load_extension(cog)
 
-    await bot.change_presence(activity=discord.Game(name=".help v" + json_content['version']))
+    await bot.change_presence(activity=discord.Game(name=".help on v" + json_content['version']))
 
     print("Ready")
     return
