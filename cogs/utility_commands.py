@@ -125,17 +125,18 @@ class utility_commands(commands.Cog):
     )
     async def colour(self, ctx, r: int, g: int, b: int):
         rgb = [r, g, b]
-        nitro = discord.utils.get(ctx.guild.roles, name = 'Nitro Boosters')
         if all(0 <= i <= 255 for i in rgb):
             role_colour = discord.Colour.from_rgb(r, g, b)
-            if not discord.utils.get(ctx.guild.roles, name = ctx.author.id):
-                new_role = await ctx.guild.create_role(name = ctx.author.id, colour = role_colour)
-                await new_role.edit(position = nitro.position + 1)
+            nitro = discord.utils.get(ctx.guild.roles, name = 'Nitro Boosters')
+            new_position = nitro + 1
+            if not discord.utils.get(ctx.guild.roles, name = str(ctx.author.id)):
+                new_role = await ctx.guild.create_role(name = str(ctx.author.id), colour = role_colour)
+                await new_role.edit(position = new_position)
                 await ctx.author.add_roles(new_role)
             else:
                 new_role = await discord.utils \
-                    .get(ctx.guild.roles, name = ctx.author.id) \
-                    .edit(colour = role_colour, position = nitro.position + 1)
+                    .get(ctx.guild.roles, name = str(ctx.author.id)) \
+                    .edit(colour = role_colour, position = new_position)
 
             embed = discord.Embed(
                 title = "Custom colour applied!",
