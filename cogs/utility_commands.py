@@ -263,6 +263,44 @@ class utility_commands(commands.Cog):
         await asyncio.sleep(3)
         formatted_tokers = ', '.join(tokers)
         await ctx.channel.send(f"{formatted_tokers} toked up! {emote}")
+        
+    @commands.has_role(585550892091310080)
+    @commands.command(
+        name = 'colour',
+        aliases = ['color']
+    )
+    async def colour(self, ctx, r: int, g: int, b: int):
+        rgb = [r, g, b]
+        comedown = discord.utils.get(ctx.guild.roles, name = 'Comedown')
+        kingpin = discord.utils.get(ctx.guild.roles, name = 'Kingpin 👾')
+        range_list = list(range(kingpin.position, comedown.position))
+        if all(0 <= i <= 255 for i in rgb):
+            role_colour = discord.Colour.from_rgb(r, g, b)
+            if not discord.utils.get(ctx.guild.roles, name = ctx.author.name):
+                new_role = await ctx.guild.create_role(name = ctx.author.name, colour = role_colour)
+                await new_role.edit(position = range_list[1])
+                await ctx.author.add_roles(new_role)
+            else:
+                new_role = await discord.utils.get(ctx.guild.roles, name = ctx.author.name).edit(colour = role_colour, position = range_list[1])
+            embed = discord.Embed(
+                title = "Custom colour applied!",
+                description = f"Applied colour **[{r}, {g}, {b}]** to **{ctx.author.display_name}**!",
+                colour = role_colour
+            )
+            await ctx.channel.send(embed = embed)
+        else:
+            await ctx.channel.send('**Error:** That is not a valid RGB colour code!')
+
+
+    @commands.command(
+        name = 'clearcolour',
+        aliases = ['clearcolor']
+    )
+    async def clearcolour(self, ctx):
+        colour_role = discord.utils.get(ctx.guild.roles, name = ctx.author.name)
+        if colour_role:
+            await colour_role.delete()
+            await ctx.channel.send(f"Custom role for {ctx.author.display_name} deleted.")
 
 
 def setup(bot):
