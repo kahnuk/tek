@@ -125,24 +125,17 @@ class utility_commands(commands.Cog):
     )
     async def colour(self, ctx, r: int, g: int, b: int):
         rgb = [r, g, b]
-        if ctx.guild.id == 253612214148136981:
-            comedown = discord.utils.get(ctx.guild.roles, name = 'Comedown')
-            kingpin = discord.utils.get(ctx.guild.roles, name = 'Kingpin 👾')
-            range_list = list(range(kingpin.position, comedown.position))
-        else:
-            baked = discord.utils.get(ctx.guild.roles, name = 'Baked')
-            nitro = discord.utils.get(ctx.guild.roles, name = 'Nitro Boosters')
-            range_list = list(range(nitro.position, baked.position))
+        nitro = discord.utils.get(ctx.guild.roles, name = 'Nitro Boosters')
         if all(0 <= i <= 255 for i in rgb):
             role_colour = discord.Colour.from_rgb(r, g, b)
-            if not discord.utils.get(ctx.guild.roles, name = ctx.author.name):
-                new_role = await ctx.guild.create_role(name = ctx.author.name, colour = role_colour)
-                await new_role.edit(position = range_list[1])
+            if not discord.utils.get(ctx.guild.roles, name = ctx.author.id):
+                new_role = await ctx.guild.create_role(name = ctx.author.id, colour = role_colour)
+                await new_role.edit(position = nitro.position + 1)
                 await ctx.author.add_roles(new_role)
             else:
                 new_role = await discord.utils \
-                    .get(ctx.guild.roles, name = ctx.author.name) \
-                    .edit(colour = role_colour, position = range_list[1])
+                    .get(ctx.guild.roles, name = ctx.author.id) \
+                    .edit(colour = role_colour, position = nitro.position + 1)
 
             embed = discord.Embed(
                 title = "Custom colour applied!",
@@ -158,7 +151,7 @@ class utility_commands(commands.Cog):
         aliases = ['clearcolor']
     )
     async def clearcolour(self, ctx):
-        colour_role = discord.utils.get(ctx.guild.roles, name = ctx.author.name)
+        colour_role = discord.utils.get(ctx.guild.roles, name = ctx.author.id)
         if colour_role:
             await colour_role.delete()
             await ctx.channel.send(f"Custom role for {ctx.author.display_name} deleted.")
