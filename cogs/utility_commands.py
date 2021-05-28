@@ -151,7 +151,7 @@ class utility_commands(commands.Cog):
         aliases = ['clearcolor']
     )
     async def clearcolour(self, ctx):
-        colour_role = discord.utils.get(ctx.guild.roles, name = ctx.author.id)
+        colour_role = discord.utils.get(ctx.guild.roles, name = str(ctx.author.id))
         if colour_role:
             await colour_role.delete()
             await ctx.channel.send(f"Custom role for {ctx.author.display_name} deleted.")
