@@ -127,9 +127,9 @@ class utility_commands(commands.Cog):
         rgb = [r, g, b]
         if all(0 <= i <= 255 for i in rgb):
             role_colour = discord.Colour.from_rgb(r, g, b)
-            nitro = discord.utils.get(ctx.guild.roles, name = 'Nitro Boosters')
-            new_position = int(nitro.position)
-            new_position += 1
+            baked = discord.utils.get(ctx.guild.roles, name = 'Baked')
+            new_position = int(baked.position)
+            new_position -= 1
             print(new_position)
             if not discord.utils.get(ctx.guild.roles, name = str(ctx.author.id)):
                 await ctx.guild.create_role(name = str(ctx.author.id), colour = role_colour)
