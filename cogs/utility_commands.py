@@ -128,8 +128,8 @@ class utility_commands(commands.Cog):
         if all(0 <= i <= 255 for i in rgb):
             role_colour = discord.Colour.from_rgb(r, g, b)
             baked = discord.utils.get(ctx.guild.roles, name = 'Baked')
-            new_position = int(baked.position)
-            new_position -= 1
+            new_position = int(baked.position) # new roles always get added below an existing position
+            
             print(new_position)
             if not discord.utils.get(ctx.guild.roles, name = str(ctx.author.id)):
                 await ctx.guild.create_role(name = str(ctx.author.id), colour = role_colour)
