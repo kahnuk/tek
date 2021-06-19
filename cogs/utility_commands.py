@@ -118,37 +118,37 @@ class utility_commands(commands.Cog):
         embed.set_thumbnail(url = user.avatar_url)
         await ctx.send(embed = success_embed)
 
-    @commands.has_any_role(585550892091310080, 345951762173394954)
-    @commands.command(
-        name = 'colour',
-        aliases = ['color']
-    )
-    async def colour(self, ctx, r: int, g: int, b: int):
-        rgb = [r, g, b]
-        if all(0 <= i <= 255 for i in rgb):
-            role_colour = discord.Colour.from_rgb(r, g, b)
-            baked = discord.utils.get(ctx.guild.roles, name = 'Baked')
-            new_position = int(baked.position) # new roles always get added below an existing position
+    # @commands.has_any_role(585550892091310080, 345951762173394954)
+    # @commands.command(
+        # name = 'colour',
+        # aliases = ['color']
+    # )
+    # async def colour(self, ctx, r: int, g: int, b: int):
+        # rgb = [r, g, b]
+        # if all(0 <= i <= 255 for i in rgb):
+            # role_colour = discord.Colour.from_rgb(r, g, b)
+            # baked = discord.utils.get(ctx.guild.roles, name = 'Baked')
+            # new_position = int(baked.position) # new roles always get added below an existing position
             
-            print(new_position)
-            if not discord.utils.get(ctx.guild.roles, name = str(ctx.author.id)):
-                await ctx.guild.create_role(name = str(ctx.author.id), colour = role_colour)
-                new_role = discord.utils.get(ctx.guild.roles, name = str(ctx.author.id))
-                await new_role.edit(position = int(new_position))
-                await ctx.author.add_roles(new_role)
-            else:
-                new_role = await discord.utils \
-                    .get(ctx.guild.roles, name = str(ctx.author.id)) \
-                    .edit(colour = role_colour, position = new_position)
+            # print(new_position)
+            # if not discord.utils.get(ctx.guild.roles, name = str(ctx.author.id)):
+                # await ctx.guild.create_role(name = str(ctx.author.id), colour = role_colour)
+                #new_role = discord.utils.get(ctx.guild.roles, name = str(ctx.author.id))
+                # await new_role.edit(position = int(new_position))
+                #await ctx.author.add_roles(new_role)
+            #else:
+                #new_role = await discord.utils \
+                    #.get(ctx.guild.roles, name = str(ctx.author.id)) \
+                    #.edit(colour = role_colour, position = new_position)
 
-            embed = discord.Embed(
-                title = "Custom colour applied!",
-                description = f"Applied colour **[{r}, {g}, {b}]** to **{ctx.author.display_name}**!",
-                colour = role_colour
-            )
-            await ctx.channel.send(embed = embed)
-        else:
-            await ctx.channel.send('**Error:** That is not a valid RGB colour code!')
+            #embed = discord.Embed(
+                #title = "Custom colour applied!",
+                #description = f"Applied colour **[{r}, {g}, {b}]** to **{ctx.author.display_name}**!",
+                #colour = role_colour
+            #)
+            #await ctx.channel.send(embed = embed)
+        #else:
+            #await ctx.channel.send('**Error:** That is not a valid RGB colour code!')
 
     @commands.command(
         name = 'clearcolour',
